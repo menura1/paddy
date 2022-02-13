@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:paddy/allscreens.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({Key? key}) : super(key: key);
@@ -127,12 +129,17 @@ class _LogInScreenState extends State<LogInScreen> {
                         ],
                       ),
                         const SizedBox(height: 25,),
-                        RichText(text: const TextSpan(
+                        RichText(text: TextSpan(
                           children: <TextSpan>[
-                            TextSpan(text: 'New user? ',
+                            const TextSpan(text: 'New user? ',
                                 style: TextStyle(color: Colors.black, fontSize: 15)),
-                            TextSpan(text: ' Register',
-                                style: TextStyle(color: Color(0xff0F00FF), fontSize:15))
+                            TextSpan(
+                              recognizer: TapGestureRecognizer()..onTap= (){
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context)=> RegisterScreen()));
+                              },
+                                text: ' Register',
+                                style: const TextStyle(color: Color(0xff0F00FF), fontSize:15))
                           ]
                         ),)
 
