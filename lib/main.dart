@@ -3,6 +3,6 @@ import 'allscreens.dart';
 
 void main() {
   runApp(const MaterialApp(
-    home: RegisterScreen(),
+    home: HomeScreen(),
   ));
 }
