@@ -11,3 +11,4 @@ export 'screens/resultscreen.dart';
 export 'screens/settingsscreen.dart';
 export 'screens/splashscreen.dart';
 export 'screens/treatmentscreen.dart';
+export 'components/sidebarmenu.dart';
