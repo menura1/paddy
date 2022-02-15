@@ -59,7 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     buildTextField(hint: 'Password', controller: password),
                     const SizedBox(height: 20,),
                     buildTextField(hint: 'Re-type password', controller: rePassword),
-                    const SizedBox(height: 15),
+                    const Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
