@@ -12,3 +12,6 @@ export 'screens/settingsscreen.dart';
 export 'screens/splashscreen.dart';
 export 'screens/treatmentscreen.dart';
 export 'components/sidebarmenu.dart';
+export 'package:flutter_screenutil/flutter_screenutil.dart';
+export 'screens/newregisterscreen.dart';
+export 'screens/newloginscreen.dart';
