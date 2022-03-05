@@ -87,57 +87,54 @@ class _LogInScreenState extends State<NewLogInScreen> {
                           child: Text('Forgot password?', style: TextStyle(color: const Color(0xff0F00FF),fontSize: 14.sp),)),
                     ),
                     SizedBox(height: 30.h,),
-                    Center(
-                      child: InkWell(
-                        onTap: (){
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50.r),
-                              color: const Color(0xff0F00FF)
-                          ),
-                          padding: EdgeInsets.symmetric(horizontal: 60.w, vertical: 15.h),
-                          child: Text('Login', style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15.sp
-                          ),),
+                    InkWell(
+                      onTap: (){
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            color: const Color(0xff0F00FF)
                         ),
+                        padding: EdgeInsets.symmetric(vertical: 15.h),
+                        margin: EdgeInsets.symmetric(horizontal: 0.w),
+                        child: Text('Login', style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 15.sp
+                        ),),
                       ),
                     ),
-                    SizedBox(height: 45.h,),
+                    SizedBox(height: 15.h,),
                     Center(
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children:  [
-                          Text('Or login with', style: TextStyle(fontSize: 15.sp),),
-                          SizedBox(height: 15.h,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: 40.h,
-                                width: 40.w,
-                                child: InkWell(
-                                  onTap: (){},
-                                  child: Image.asset('images/twitter.png'),),
+                          InkWell(
+                            onTap: (){},
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.symmetric(vertical: 15.h),
+                              margin: EdgeInsets.symmetric(horizontal: 0.w),
+                              // width: double.infinity,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black45, width: 1.5),
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10.r)
                               ),
-                              SizedBox(width: 20.w,),
-                              SizedBox(
-                                height: 40.h,
-                                width: 40.w,
-                                child: InkWell(
-                                  onTap: (){},
-                                  child: Image.asset('images/google.png'),),
+                              child: Row(
+                                mainAxisAlignment : MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                      height: 19.h,
+                                      child: Image.asset('images/google.png')),
+                                  SizedBox(width: 10.w,),
+                                  Text('Google', style: TextStyle(
+                                      color: Colors.black, fontSize: 14.sp, fontWeight: FontWeight.bold),),
+                                ],
                               ),
-                              SizedBox(width: 20.w,),
-                              SizedBox(
-                                height: 40.h,
-                                width: 40.w,
-                                child: InkWell(
-                                  onTap: (){},
-                                  child: Image.asset('images/facebook.png'),),
-                              )
-                            ],
+                            ),
                           ),
                           SizedBox(height: 25.h,),
                           RichText(text: TextSpan(

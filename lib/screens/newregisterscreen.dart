@@ -40,8 +40,7 @@ class NewRegisterScreen extends StatelessWidget {
             body: SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 25.w),
-                height: height-topPadding-bottomPadding,
-                width: width,
+                height: height,
                 color: Colors.white,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
