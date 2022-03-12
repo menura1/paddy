@@ -5,8 +5,11 @@ class DiseaseModel{
   String name;
   String description;
   int index;
-  List<DiseaseTreatment> treatments;
+  String source;
 
   DiseaseModel({
-    required this.treatments, required this.name, required this.description, required this.index});
+    required this.name,
+    required this.description,
+    required this.source,
+    required this.index});
 }

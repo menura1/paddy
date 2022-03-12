@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:paddy/allscreens.dart';
+import 'package:http/http.dart' as http;
 
 class NewRegisterScreen extends StatelessWidget {
   NewRegisterScreen({Key? key}) : super(key: key);
@@ -80,6 +81,10 @@ class NewRegisterScreen extends StatelessWidget {
                     SizedBox(height: 10.h,),
                     InkWell(
                       onTap: (){
+                        http.post(Uri.parse(""),body:{
+                          "email": email.text,
+                          "password": password.text,
+                        } );
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                       },
                       child: Container(

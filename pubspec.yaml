@@ -39,6 +39,8 @@ dependencies:
   image_picker:
   meta: ^1.7.0
   tflite: ^1.1.2
+  url_launcher: ^6.0.20
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:

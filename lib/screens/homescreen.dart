@@ -19,7 +19,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   Predictions pred = Predictions();
 
   @override
@@ -48,21 +47,19 @@ class _HomeScreenState extends State<HomeScreen> {
         return Container(
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20)
-            ),
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
             color: Colors.white,
           ),
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text(
+              const Text(
                 'Select an option',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               ListTile(
@@ -92,35 +89,64 @@ class _HomeScreenState extends State<HomeScreen> {
     if (img != null) {
       final image = File(img.path);
       var result = await pred.runModel(image);
-      Fluttertoast.showToast(
-          msg: result.toString(),
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0
-      );
 
-      if(result!=null){
-        if(result.isNotEmpty){
-          String label = result[0]['label'];
-          print("Disease - $label");
-          double confidence = double.parse(result[0]['confidence'].toStringAsFixed(2))*100;
-          print("Confidence - $confidence %");
-          int index = DiseaseData.diseases[result[0]['index']].index;
 
-          ResultModel resultModel = ResultModel(diseaseModel: DiseaseData.diseases[index], image: image, confidence: confidence);
+      if (result != null) {
+        if (result.isNotEmpty) {
 
-          Navigator.push(context, MaterialPageRoute(
-              builder: (context) => ResultScreen(resultModel: resultModel,)));
+          List<int> healthyIndexes = [3,4,6,10,14,17,19,22,23,24,27,37];
+          if(!healthyIndexes.contains(result[0]['index'])){
+            String label = result[0]['label'];
+            print("Disease - $label");
+            double confidence =
+                double.parse(result[0]['confidence'].toStringAsFixed(2)) * 100;
+            print("Confidence - $confidence %");
+            int index = DiseaseData.diseases[result[0]['index']].index;
+            int indexx = result[0]['index'];
+            print(indexx);
+
+            ResultModel resultModel = ResultModel(
+                diseaseModel: DiseaseData.diseases[indexx],
+                image: image,
+                confidence: confidence);
+            print(resultModel.diseaseModel.index.toString());
+            print(DiseaseData.diseases[indexx].index);
+            print(indexx);
+
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ResultScreen(
+                      resultModel: resultModel,
+                    )));
+          }
+
+          else {
+            print('It looks like the leaf is healthy!');
+            Fluttertoast.showToast(
+                msg: 'It looks like the leaf is healthy!',
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          }
         }
         else{
           print('Couldn\'t predict, please try again!');
+          Fluttertoast.showToast(
+              msg: 'Couldn\'t predict, please try again!',
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
         }
 
       }
-      
+
       // Navigator.push(
       //     context,
       //     MaterialPageRoute(
@@ -306,7 +332,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 25,
                   ),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       setState(() {
                         pickImg();
                       });

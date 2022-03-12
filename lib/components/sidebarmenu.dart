@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paddy/allscreens.dart';
+import 'package:paddy/screens/about_us_screen.dart';
+import 'package:paddy/screens/faqs_screen.dart';
 
 class SideBarMenu extends StatelessWidget {
   const SideBarMenu({Key? key}) : super(key: key);
@@ -52,12 +54,22 @@ class SideBarMenu extends StatelessWidget {
 
                   }),
               menuItem(
-                  title: 'Settings',
-                  icon: const Icon(Icons.settings),
+                  title: "FAQs",
+                  icon: const Icon(Icons.contact_support),
+                  ontap: (){
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context)=> FaqsScreen()));
+                  }
+              ),
+
+
+              menuItem(
+                  title: 'About us',
+                  icon: const Icon(Icons.info),
                   ontap:  (){
                     Navigator.of(context).pop();
                     Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => const SettingsScreen()));
+                        builder: (context) => const AboutUsScreen()));
 
                   }),
               menuItem(

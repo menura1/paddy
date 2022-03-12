@@ -1,8 +1,8 @@
 
 class DiseaseTreatment{
-  String name;
-  String description;
+  String treatment;
+  String source;
   int index;
 
-  DiseaseTreatment({required this.index, required this.name, required this.description});
+  DiseaseTreatment({required this.index, required this.treatment, required this.source});
 }
