@@ -1,14 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:paddy/allscreens.dart';
+import 'package:paddy/all_screens.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:paddy/screens/results_screen.dart';
-
 import 'package:paddy/services/ml_service.dart';
-
-import '../disease_data.dart';
+import '../services/disease_data.dart';
 import '../models/result_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,27 +16,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Predictions pred = Predictions();
+  //creating an instance of the ML Service class
+  MLService mlService = MLService();
 
   @override
   void initState() {
-    pred.loadModel();
+    //loading the tflite model on the initState
+    mlService.loadModel();
   }
 
-  String? diseaseName = 'Powdery Mildew';
 
-  String? diseaseDescription =
-      'Powdery mildew leaves a telltale white dusty coating'
-      ' on leaves, stems and flowers. Caused by a fungus, it affects a number of plants,'
-      ' including lilacs, apples, grapes, cucumbers, peas, phlox, daisies and roses.Powdery mildew leaves a telltale white dusty coating'
-      ' on leaves, stems and flowers. Caused by a fungus, it affects a number of plants,'
-      ' including lilacs, apples, grapes, cucumbers, peas, phlox, daisies and roses.Powdery mildew leaves a telltale white dusty coating'
-      ' on leaves, stems and flowers. Caused by a fungus, it affects a number of plants,'
-      ' including lilacs, apples, grapes, cucumbers, peas, phlox, daisies and roses.Powdery mildew leaves a telltale white dusty coating'
-      ' on leaves, stems and flowers. Caused by a fungus, it affects a number of plants,'
-      ' including lilacs, apples, grapes, cucumbers, peas, phlox, daisies and roses ';
-
+  //this function let the user to select or take an image
   void pickImg() {
+    //showing the bottom sheet
     showModalBottomSheet<void>(
       backgroundColor: Colors.transparent,
       context: context,
@@ -62,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 10,
               ),
+              //Camera option
               ListTile(
                 onTap: () {
                   getImage(ImageSource.camera);
@@ -69,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 leading: const Icon(Icons.camera_alt),
                 title: const Text('Capture a photo from camera'),
               ),
+              //Gallery option
               ListTile(
                 onTap: () {
                   getImage(ImageSource.gallery);
@@ -83,36 +74,46 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  //Capturing an image or selecting an image from storage
   Future getImage(ImageSource imgSource) async {
+    //getting the user selected image
     final img = await ImagePicker().pickImage(source: imgSource);
+    //dismissing the bottom sheet
     Navigator.of(context).pop();
     if (img != null) {
+      //creating image file
       final image = File(img.path);
-      var result = await pred.runModel(image);
-
+      //running the tflite model on the image
+      var result = await mlService.runModel(image);
 
       if (result != null) {
         if (result.isNotEmpty) {
 
+          //this list contains the indexes of the healthy classes that need to be ignored
           List<int> healthyIndexes = [3,4,6,10,14,17,19,22,23,24,27,37];
+
+          //checking if the ignoring list contains the index of the result
           if(!healthyIndexes.contains(result[0]['index'])){
+
+            //extracting the disease label (disease name)
             String label = result[0]['label'];
-            print("Disease - $label");
-            double confidence =
-                double.parse(result[0]['confidence'].toStringAsFixed(2)) * 100;
-            print("Confidence - $confidence %");
-            int index = DiseaseData.diseases[result[0]['index']].index;
-            int indexx = result[0]['index'];
-            print(indexx);
 
+            //extracting the confidence of the prediction and formatting it
+            double confidence = double.parse(result[0]['confidence'].toStringAsFixed(2)) * 100;
+
+            //extracting the disease index (index of the disease given in labels.txt file)
+            int index = result[0]['index'];
+
+            //creating a instance of ResultModel with the extracted info from the model prediction
             ResultModel resultModel = ResultModel(
-                diseaseModel: DiseaseData.diseases[indexx],
-                image: image,
+                //relevant instance of the disease
+                diseaseModel: DiseaseData.diseases[index],
+                //preview image
+                imagePreview: image,
+                //confidence of the prediction
                 confidence: confidence);
-            print(resultModel.diseaseModel.index.toString());
-            print(DiseaseData.diseases[indexx].index);
-            print(indexx);
 
+            //navigating to the results screen
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -121,6 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     )));
           }
 
+          //if the leaf is healthy then showing a toast
           else {
             print('It looks like the leaf is healthy!');
             Fluttertoast.showToast(
@@ -128,11 +130,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.CENTER,
                 timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
+                backgroundColor: Colors.blueAccent,
                 textColor: Colors.white,
                 fontSize: 16.0);
           }
         }
+        //if the model fails to predict then showing a toast
         else{
           print('Couldn\'t predict, please try again!');
           Fluttertoast.showToast(
@@ -146,18 +149,10 @@ class _HomeScreenState extends State<HomeScreen> {
         }
 
       }
-
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) => ResultScreen(
-      //               image: image,
-      //               diseaseName: diseaseName!,
-      //               diseaseDescription: diseaseDescription!,
-      //             )));
     }
   }
 
+  // customizing the app bar
   var appBar = AppBar(
     backgroundColor: const Color(0xff0F00FF),
     centerTitle: true,
@@ -173,11 +168,14 @@ class _HomeScreenState extends State<HomeScreen> {
     ],
   );
 
+
+  //build method
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(393, 851),
       builder: () => SafeArea(
+        //auto ignore the keyboard
         child: GestureDetector(
           onTap: () {
             FocusScopeNode currentFocus = FocusScope.of(context);
@@ -191,95 +189,14 @@ class _HomeScreenState extends State<HomeScreen> {
             drawer: const SideBarMenu(),
             appBar: appBar,
             body: Center(child: buildHomeBody()),
-            // body: SingleChildScrollView(
-            //   child: Material(
-            //     color: Colors.white,
-            //     child: Container(
-            //       height: MediaQuery.of(context).size.height-
-            //               MediaQuery.of(context).padding.top-
-            //               MediaQuery.of(context).padding.bottom-
-            //               appBar.preferredSize.height,
-            //       child: Column(
-            //         children: [
-            //           SizedBox(height: 25.h,),
-            //           Text('Select category', style: TextStyle(
-            //               color: const Color(0xff0F00FF), fontSize:25.sp, fontWeight: FontWeight.bold)),
-            //           SizedBox(height: 25.h,),
-            //           InkWell(
-            //             onTap: () {
-            //               pickImg();
-            //             },
-            //             child: Container(
-            //               margin: EdgeInsets.symmetric(horizontal: 20.w),
-            //               decoration: BoxDecoration(
-            //                   color: const Color(0xff2EB086).withOpacity(0.8),
-            //                   borderRadius: BorderRadius.circular(15.r)
-            //             ),
-            //               height: 200.h,
-            //               child: Row(
-            //                 mainAxisAlignment: MainAxisAlignment.center,
-            //                 children: [
-            //                   Text('Leaf', style: TextStyle(
-            //                       color: Colors.white, fontSize: 35.sp),),
-            //                   Icon(Icons.spa_rounded, color: Colors.white,size: 35.sp,)
-            //                 ],
-            //               ),
-            //             ),
-            //           ),
-            //           SizedBox(height: 25.h,),
-            //           InkWell(
-            //             onTap: (){
-            //               pickImg();
-            //             },
-            //             child: Container(
-            //               margin: EdgeInsets.symmetric(horizontal: 20.w),
-            //               decoration: BoxDecoration(
-            //                   color: const Color(0xffFFAB76).withOpacity(0.8),
-            //                   borderRadius: BorderRadius.circular(15.r)
-            //               ),
-            //               height: 200.h,
-            //               child: Row(
-            //                 mainAxisAlignment: MainAxisAlignment.center,
-            //                 children: [
-            //                   Text('Fruit', style: TextStyle(
-            //                       color: Colors.white, fontSize: 35.sp),),
-            //                   Icon(Icons.park, color: Colors.white,size: 35.sp,)
-            //                 ],
-            //               ),
-            //             ),
-            //           ),
-            //           SizedBox(height: 45.h,),
-            //           Container(
-            //             margin: EdgeInsets.symmetric(horizontal: 30.w),
-            //             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
-            //             decoration: BoxDecoration(
-            //               borderRadius: BorderRadius.circular(35.r),
-            //               color: const Color(0xff0F00FF).withOpacity(0.12)
-            //             ),
-            //             child: Row(
-            //               mainAxisAlignment: MainAxisAlignment.center,
-            //               children: [
-            //               Icon(Icons.info_outline,
-            //                 color: const Color(0xff0F00FF).withOpacity(0.7), size: 18.sp,),
-            //               const SizedBox(width: 5,),
-            //               Text('Please select the correct category',
-            //                 style: TextStyle(
-            //                 color: const Color(0xff0F00FF).withOpacity(0.7),
-            //                   fontSize: 15.sp
-            //               ),)
-            //             ],),
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ),
         ),
       ),
     );
   }
 
+
+  //Home page body UI
   Widget buildHomeBody() {
     return Column(
       mainAxisSize: MainAxisSize.min,

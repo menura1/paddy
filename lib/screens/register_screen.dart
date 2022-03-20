@@ -1,34 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:paddy/allscreens.dart';
+import 'package:paddy/all_screens.dart';
 import 'package:http/http.dart' as http;
 
-class NewRegisterScreen extends StatelessWidget {
-  NewRegisterScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatelessWidget {
+  RegisterScreen({Key? key}) : super(key: key);
 
+  //controls the name text field
   TextEditingController email = TextEditingController();
+  //controls the email text field
   TextEditingController fullName = TextEditingController();
+  //controls the phone number text field
   TextEditingController phoneNum = TextEditingController();
+  //controls the password text field
   TextEditingController password = TextEditingController();
+  //controls the confirm password text field
   TextEditingController rePassword = TextEditingController();
+  //controls the date of birth text field
   TextEditingController dateOfBirth = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
+
     var height = MediaQuery.of(context).size.height;
-    var topPadding = MediaQuery.of(context).padding.top;
-    var bottomPadding = MediaQuery.of(context).padding.bottom;
-
-
-    print((width).toString());
-    print((height).toString());
-    print((height-topPadding).toString());
+    var width = MediaQuery.of(context).size.width;
 
     return ScreenUtilInit(
       designSize: const Size(360,640),
       builder: () => SafeArea(
         child: GestureDetector(
+          //auto dismissing the keyboard
           onTap: (){
             FocusScopeNode currentFocus = FocusScope.of(context);
 
@@ -56,7 +57,7 @@ class NewRegisterScreen extends StatelessWidget {
                       ),),
                       InkWell(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => NewLogInScreen()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => LogInScreen()));
                         },
                         child: Text(' Log in', style: TextStyle(
                           color: Color(0xff3F66F2), fontSize: 14.sp, fontWeight: FontWeight.w500
@@ -64,21 +65,28 @@ class NewRegisterScreen extends StatelessWidget {
                       ),
                     ],),
                     SizedBox(height: 20.h,),
+                    //name text field
                     buildTextField(hint: 'Full name', controller: fullName),
                     SizedBox(height: 14.5.h,),
+                    // email field
                     buildTextField(hint: 'Email', controller: email),
                     SizedBox(height: 14.5.h,),
+                    // phone number field
                     buildTextField(hint: 'Phone number', controller: phoneNum),
                     SizedBox(height: 14.5.h,),
+                    // dob text field
                     buildTextField(hint: 'Date of birth', controller: dateOfBirth),
                     SizedBox(height: 14.5.h,),
+                    //password text field
                     buildTextField(hint: 'Password', controller: password),
                     SizedBox(height: 14.5.h,),
+                    //re password text field
                     buildTextField(hint: 'Re-type password', controller: rePassword),
                     SizedBox(height: 20.h,),
                     Text('By signing up to Paddy you agree to our', style: TextStyle(fontSize: 11.sp, color: Color(0xff737373)),),
                     Text('terms & conditions', style: TextStyle(color: Color(0xff0F00FF), fontSize: 11.sp),),
                     SizedBox(height: 10.h,),
+                    //sign up button
                     InkWell(
                       onTap: (){
                         http.post(Uri.parse(""),body:{
@@ -99,6 +107,7 @@ class NewRegisterScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 10.h,),
+                    //google sign up button
                     InkWell(
                       onTap: (){},
                       child: Container(
@@ -134,6 +143,7 @@ class NewRegisterScreen extends StatelessWidget {
     );
   }
 
+  //building a text field
   Widget buildTextField({required String hint, required TextEditingController controller}){
     return Container(
       decoration: BoxDecoration(

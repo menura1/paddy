@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paddy/allscreens.dart';
+import 'package:paddy/all_screens.dart';
 import 'package:paddy/models/result_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -18,16 +18,17 @@ class _ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: ScreenUtilInit(
-        designSize: Size(360, 640),
+        designSize: const Size(360, 640),
         builder: () => Scaffold(
           body: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Material(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Stack(
                     children: [
+                      //image preview
                       SizedBox(
                           height: 250.h,
                           width: 360.w,
@@ -36,7 +37,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                   bottomRight: Radius.circular(30.r),
                                   bottomLeft: Radius.circular(30.r)),
                               child: Image.file(
-                              widget.resultModel.image,
+                              widget.resultModel.imagePreview,
                                 fit: BoxFit.cover,
                               ))),
                       Positioned(
@@ -46,7 +47,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             onPressed: (){
                               Navigator.of(context).pop();
                             },
-                            icon: Icon(Icons.arrow_back_rounded, color: Colors.white,),))
+                            icon: const Icon(Icons.arrow_back_rounded, color: Colors.white,),))
                     ],
                   ),
                   Padding(
@@ -57,6 +58,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         SizedBox(height: 16.h,),
                         Row(
                           children: [
+                            //showing the prediction confidence
                             Container(
                               alignment: Alignment.center,
                               height: 20.h,
@@ -64,6 +66,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10.r),
                                   border: Border.all(
+                                      // changing the color dynamically according to the confidence
                                       color: widget.resultModel.confidence>70?Colors.green: widget.resultModel.confidence>50? Colors.orange: Colors.red,
                                       width: 1.5.w)
                               ),
@@ -84,6 +87,7 @@ class _ResultScreenState extends State<ResultScreen> {
                           ],
                         ),
                         SizedBox(height: 10.h,),
+                        //showing disease name
                         Text(widget.resultModel.diseaseModel.name, style: TextStyle(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w700
@@ -103,11 +107,12 @@ class _ResultScreenState extends State<ResultScreen> {
                                 height: 40.h,
                                 width: 155.w,
                                 decoration: BoxDecoration(
-                                  color: widget.detailsSelected? Color(0xff3F66F2): Color(0xffD6D6D6),
+                                  color: widget.detailsSelected? const Color(0xff3F66F2): const Color(0xffD6D6D6),
                                   borderRadius: BorderRadius.circular(5.r)
                                 ),
+                                //disease description
                                 child: Text("Details", style: TextStyle(
-                                  color: widget.detailsSelected? Colors.white: Color(0xff686868),
+                                  color: widget.detailsSelected? Colors.white: const Color(0xff686868),
                                   fontSize: 14.sp
                                 ), textAlign: TextAlign.center,),
                               ),
@@ -121,11 +126,11 @@ class _ResultScreenState extends State<ResultScreen> {
                                 height: 40.h,
                                 width: 155.w,
                                 decoration: BoxDecoration(
-                                  color: widget.detailsSelected? Color(0xffD6D6D6): Color(0xff3F66F2),
+                                  color: widget.detailsSelected? const Color(0xffD6D6D6): const Color(0xff3F66F2),
                                   borderRadius: BorderRadius.circular(5.r)
                                 ),
                                 child: Text("Treatments", style: TextStyle(
-                                  color: widget.detailsSelected? Color(0xff686868): Colors.white,
+                                  color: widget.detailsSelected? const Color(0xff686868): Colors.white,
                                   fontSize: 14.sp
                                 ), textAlign: TextAlign.center,),
                               ),
@@ -134,6 +139,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         ),
                         SizedBox(height: 16.h,),
                         widget.detailsSelected? detailsTab(): treatmentsTab(),
+                        SizedBox(height: 20.h,),
                       ],
                     ),
                   )
@@ -146,6 +152,7 @@ class _ResultScreenState extends State<ResultScreen> {
     );
   }
 
+  //building the details tab ui
   Widget detailsTab(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,11 +169,11 @@ class _ResultScreenState extends State<ResultScreen> {
                 color: Colors.blue.withOpacity(0.25),
                 borderRadius: BorderRadius.circular(20)
               ),
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
               child: Text(widget.resultModel.diseaseModel.source, style: TextStyle(
                   fontSize: 11.sp,
                   fontWeight: FontWeight.normal,
-                  color: Color(0xff084594)
+                  color: const Color(0xff084594)
               ),),
             ),
           ],
