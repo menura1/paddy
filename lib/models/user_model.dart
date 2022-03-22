@@ -4,7 +4,7 @@ class User {
   //email of the user
   String email;
   //phone number of the user
-  int phoneNum;
+  String phoneNum;
   //date of birth of the user
   String dateOfBirth;
 

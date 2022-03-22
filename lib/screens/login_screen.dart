@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:paddy/all_screens.dart';
+import 'package:http/http.dart' as http;
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class _LogInScreenState extends State<LogInScreen> {
   TextEditingController email = TextEditingController();
   //controls the name text field
   TextEditingController password = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +110,13 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                     //login button
                     InkWell(
-                      onTap: () {
+                      onTap: () async {
+                        await http.post(Uri.parse("https://paddy-backend.herokuapp.com/authenticate"),body:{
+                          "name": email.text,
+                          "password": password.text,
+                        } ).then((value) => {
+                          print(value.body)
+                        });
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

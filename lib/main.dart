@@ -8,7 +8,11 @@ import 'all_screens.dart';
 void main() {
   DiseaseData().init();
   runApp(
-    const MaterialApp(
+    MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        fontFamily: 'Poppins',
+      ),
       home: Paddy(),
     ),
   );
@@ -22,7 +26,7 @@ class Paddy extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => ImagePick(),
       builder: (BuildContext context, child) {
-        return const HomeScreen();
+        return LogInScreen();
       },
     );
   }

@@ -13,18 +13,21 @@ class DiseaseData{
           name: 'init',
           description: 'init',
           source: "init",
-          index: 0));
+          index: 0,
+          remedy: 'init'));
     }
 
     //creating disease instances for all diseases
     diseases[0] = DiseaseModel(
         name: 'Apple Scab',
         description: appleScab,
+        remedy: "To prevent the fungus from spreading, remove and burn the fallen dead leaves. Make sure the canopy has enough ventilation and that the plants are not overcrowded. Begin fertilizing at two-week intervals once fresh growth has emerged.",
         source: 'wikipedia.org',
         index: 0);
 
     diseases[1] = DiseaseModel(
         name: 'Apple Black rot',
+        remedy: "Remove any branches that are dead or unhealthy and destroy all the infected parts. Pick all of the remaining dry and deformed fruits off the trees. If you take down any apple trees, make sure to remove the stumps as spores can be found in dead stumps.",
         description: appleBlackRot,
         source: "gardeningknowhow.com",
         index: 1);
@@ -32,150 +35,171 @@ class DiseaseData{
     diseases[2] = DiseaseModel(
         name: 'Apple Cedar Rust',
         description: appleCederRust,
+        remedy: "Remove fallen leaves and other debris from under trees with a rake. Infected junipers should have their galls removed. Use disease-fighting fungicides as a preventative measure.",
         source: "fs.fed.us",
         index: 2);
 
     diseases[5] = DiseaseModel(
         name: 'Cherry Powdery mildew',
         description: cherryPowderyMildew,
+        remedy: "Apply fungicides as the disease grows. Pruning the infected trees and eliminating hedgerows near the trees aid in the drying of leaves and fruit, which helps manage this disease.",
         source: "treefruit.wsu.edu",
         index: 5);
 
     diseases[7] = DiseaseModel(
         name: 'Corn Grey leaf spot',
         description: cornGreyLeafSpot,
+        remedy: "Prune and remove heavily affected leaves. Apply neem oil or similar fungicide to the foliage on a regular basis. As it recovers, avoid getting water on the leaves. Temporarily keep the plant away from other plants and monitor on a daily basis to see if the virus has stopped spreading.",
         source: "extension.umn.edu",
         index: 7);
 
     diseases[8] = DiseaseModel(
         name: 'Corn Common rust',
         description: cornCommonRust,
+        remedy: "If the corn starts to show signs of infection, spray it with a fungicide immediately. When used at the first sign of infection, the fungicide is most effective.",
         source: "extension.umn.edu",
         index: 8);
 
     diseases[10] = DiseaseModel(
         name: 'Corn Northern Leaf Blight',
         description: cornNorthernLeafBlight,
+        remedy: "Till the corn into the soil. If in a small garden, it may be more practical to simply uproot and destroy the damaged plants. The northern corn leaf blight should be treated using fungicides.",
         source: "udel.edu",
         index: 10);
 
     diseases[11] = DiseaseModel(
         name: 'Grape Black rot',
         description: grapeBlackRot,
+        remedy: "Between bud break and roughly four weeks following bloom is the optimal period to treat black rot in grapes. Remove out all areas with lesions. If new lesions emerge on the leaves remove them immediately and begin a spray treatment regimen with fungicides.",
         source: "wikipedia.org",
         index: 11);
 
     diseases[12] = DiseaseModel(
         name: 'Grape Esca (Black Measles)',
         description: grapeEsca,
+        remedy: "Leaves that are badly impacted should be pruned and removed. Provide suitable fungicides and avoid getting water onto the leaves. Temporarily keep the plant away from other plants as the bacteria can be spread to other plants.",
         source: "www2.ipm.ucanr.edu",
         index: 12);
 
     diseases[14] = DiseaseModel(
         name: 'Grape Leaf blight (Isariopsis Leaf Spot)',
         description: grapeLeafBlight,
+        remedy: "Use fungicides to control the disease and remove all the infected leaves.",
         source: "plantvillage.psu.edu",
         index: 14);
 
     diseases[15] = DiseaseModel(
         name: 'Orange Haunglongbing (Citrus greening)',
         description: orangeHaunglongbing,
+        remedy: "There is no cure for citrus greening once it has developed. Your tree will decline over time, and the disease will eventually destroy the tree. Therefore It's essential to get rid of citrus greening disease-affected trees since every tree infected with citrus greening has the potential to infect healthy trees.",
         source: "frontiersin.org",
         index: 15);
 
     diseases[16] = DiseaseModel(
         name: 'Peach Bacterial spot',
         description: peachBacterialSpot,
+        remedy: "To prevent the germs from spreading to other leaves, remove the afflicted leaves as soon as possible. Remove any old fruit debris from the garden and avoid planting new crops where host plants once thrived. There are no chemical treatments for this disease. Therefore take the necessary preventive measures at the first sign of symptoms.",
         source: "canr.msu.edu",
         index: 16);
 
     diseases[18] = DiseaseModel(
         name: 'Bell pepper bacterial spot',
         description: bellPepperBacterialSpot,
+        remedy: "Infected seeds might potentially spread bacterial leaf spot. Therefore buy certified disease free seed and seedlings. Splattering damp soil onto the leaves also spreads the bacterium. Therefore Use a soaker hose to reduce spatter and avoid overhead watering. Crop rotation can assist in the prevention of bacterial leaf spot.",
         source: "extension.wvu.edu",
         index: 18);
 
     diseases[20] = DiseaseModel(
         name: 'Potato Early blight',
         description: potatoEarlyBlight,
+        remedy: "To treat the Potato Early blight, prune plants to improve air circulation and reduce fungal problems. Moreover, keep the soil under plants clean and free of garden debris. Potato Early blight can be prevented by planting potato varieties that are resistant to the disease",
         source: "www2.ipm.ucanr.edu",
         index: 20);
 
     diseases[22] = DiseaseModel(
         name: 'Potato Late blight',
         description: potatoLateBlight,
+        remedy: "Potato Late blight can be treated by planting resistant cultivars when available. Also, remove volunteers from the garden prior to planting and space plants far enough apart to allow for plenty of air circulation.",
         source: "apsnet.org",
         index: 22);
 
     diseases[25] = DiseaseModel(
         name: 'Squash Powdery mildew',
         description: squashPowderyMildew,
+        remedy: "For Squash Powdery mildew, Use sulfur-containing organic fungicides to prevent and cure the infections. Furthermore, remove the affected part from the plant and discard. Some perennials can be cut down to the ground and new growth will appear.",
         source: "growveg.com",
         index: 25);
 
     diseases[27] = DiseaseModel(
         name: 'Strawberry Leaf scorch',
         description: strawberryLeafScorch,
+        remedy: "Strawberry Leaf scorch can be treated by removing infected garden debris from the strawberry patch, as well as establishing frequent new strawberry transplants.",
         source: "gardeningknowhow.com",
         index: 27);
 
     diseases[28] = DiseaseModel(
         name: 'Tomato Bacterial spot',
         description: tomatoBacterialSpot,
+        remedy: "Tomato Bacterial spot cannot be cured.  So to prevent the spread, remove plants with symptoms from the field.  Burn, bury or hot compost the affected plants and avoid eating symptomatic fruit.",
         source: "hort.extension.wisc.edu",
         index: 28);
 
     diseases[29] = DiseaseModel(
         name: 'Tomato Early blight',
         description: tomatoEarlyBlight,
+        remedy: "Tomato Early blight can be treated by removing infected plant portions. If you notice any telltale signs, prune those sections from the plant and discard them far away from your garden. Also, can use fungicide to solve the problem.",
         source: "extension.umn.edu",
         index: 29);
 
     diseases[31] = DiseaseModel(
         name: 'Tomato Late blight',
         description: tomatoLateBlight,
+        remedy: "Tomato Late blight is not a treatable disease, and it will kill the plants. It is important to destroy infected plants once you confirm that your plant is having late blight because it can spread quickly.",
         source: "www2.ipm.ucanr.edu",
         index: 31);
 
     diseases[32] = DiseaseModel(
         name: 'Tomato Leaf Mold',
         description: tomatoLeafMold,
+        remedy: "Tomato Leaf Mold can be treated by spraying fungicide. When spraying fungicide, cover all parts of the plant that are above ground. Another treatment is to let the plants air out and dry. By doing this, the humidity of the leaves becomes low.",
         source: "canr.msu.edu",
         index: 32);
 
     diseases[33] = DiseaseModel(
         name: 'Tomato Septoria leaf spot',
         description: tomatoSeptoriaLeafSpot,
+        remedy: "Spraying fungicides can help in treating Septoria leaf spot disease. The chemicals need to be applied on a seven-to-ten-day schedule to be effective. The most used chemicals are maneb and chlorothalonil. Potassium bicarbonate, ziram, and copper products are a few other sprays useful against the fungus.",
         source: "missouribotanicalgarden.org",
         index: 33);
 
     diseases[34] = DiseaseModel(
         name: 'Tomato Spider mites (Two-spotted spider mite)',
         description: tomatoSpiderMites,
+        remedy: "To treat the two-spotted mites apply a pesticide specific to mites called a miticide. Two-spotted mites should be started before the plants are seriously damaged. Apply the miticide for control of two-spotted mites every 7 days or so. Switch to another type of miticide after three applications, Since mites can develop resistance to chemicals.",
         source: "pnwhandbooks.org",
         index: 34);
 
     diseases[35] = DiseaseModel(
         name: 'Tomato Target Spot',
         description: tomatoTargetSpot,
+        remedy: "Tomato Target Spot can be treated using fungicides. Fungicides that are used for Tomato Target Spot are chlorothalonil, copper oxychloride or mancozeb. Treatment should be started when the first spots are seen and continue at 10-14-day intervals until 3-4 weeks before last harvest.",
         source: "gardeningknowhow.com",
         index: 35);
 
     diseases[36] = DiseaseModel(
         name: 'Tomato Mosaic Virus',
         description: tomatoMosaicVirus,
+        remedy: "There is no cure for mosaic viruses. So, to prevent the infection from spreading, remove all infected plants and destroy them. The virus can persist in infected plant matter so avoid putting them in the compost pile. Burn infected plants or throw them out.",
         source: "sciencedirect.com",
         index: 36);
 
     diseases[37] = DiseaseModel(
         name: 'Tomato Yellow Leaf Curl Virus',
         description: tomatoYellowLeafCurlVirus,
+        remedy: "For, Tomato Yellow Leaf Curl Virus use a fungicide named imidacloprid  for the treatment. Imidacloprid should be sprayed on the entire plant and below the leaves. Spray every 14-21 days and rotate monthly with Abamectin so that the infection won't build-up resistance to chemicals.",
         source: "www2.ipm.ucanr.edu",
         index: 37);
 
-
-    print(diseases.length);
-    print(diseases[37].name);
   }
 
   //disease details
@@ -205,41 +229,5 @@ class DiseaseData{
   static String tomatoTargetSpot = "Also known as early blight, target spot of tomato is a fungal disease that attacks a diverse assortment of plants, including papaya, peppers, snap beans, potatoes, cantaloupe, and squash as well as passion flower and certain ornamentals. Target spot on tomato fruit is difficult to control because the spores, which survive on plant refuse in the soil, are carried over from season to season. Read on to learn how to treat target spot on tomatoes. Target spot on tomato fruit is difficult to recognize in the early stages, as the disease resembles several other fungal diseases of tomatoes. However, as diseased tomatoes ripen and turn from green to red, the fruit displays circular spots with concentric, target-like rings and a velvety black, fungal lesions in the center. The “targets” become pitted and larger as the tomato matures.";
   static String tomatoMosaicVirus = "Tomato mosaic virus (ToMV ) Long considered a strain of TMV, ToMV is a distinct viral species, also transmitted by contact. Present on every continent, this virus is found more frequently than TMV on tomato and pepper, both in field crops and under protection. The importance of ToMV has greatly diminished with the widespread use of resistant varieties of tomato. Recent experiments of introducing non-resistant crop varieties have shown however, that the very stable ToMV virus is still widely present in the field. symptoms can vary depending on the nature of the strains, cultivar, stage of infection, temperature, intensity of light, and nitrogen and boron soil content. For example, high temperatures may reduce the intensity of symptoms on leaves.";
   static String tomatoYellowLeafCurlVirus = "Tomato yellow leaf curl virus is undoubtedly one of the most damaging pathogens of tomato, and it limits production of tomato in many tropical and subtropical areas of the world. It is also a problem in many countries that have a Mediterranean climate such as California. Thus, the spread of the virus throughout California must be considered as a serious potential threat to the tomato industry. Leaves of infected plants are small and curl upward; and show strong crumpling and interveinal and marginal yellowing. The internodes of infected plants become shortened and, together with the stunted growth, plants often take on a bushy appearance, which is sometimes referred to as 'bonsai' or broccoli'-like growth. Flowers formed on infected plants commonly do not develop and fall off (abscise). Fruit production is dramatically reduced, particularly when plants are infected at an early age, and it is not uncommon for losses of 100% to be experienced in fields with heavily infected plants.";
-
-  // //treatments
-  // static var appleScabTSource = "www.gardeningknowhow.com";
-  // static var appleScabT1 = "Rake under trees and destroy infected leaves to reduce the number of fungal spores available to start the disease cycle over again next spring.";
-  // static var appleScabT2 = "Water in the evening or early morning hours (avoid overhead irrigation) to give the leaves time to dry out before infection can occur.";
-  // static var appleScabT3 =  "Spread a 3- to 6-inch layer of compost under trees, keeping it away from the trunk, to cover soil and prevent splash dispersal of the fungal spores.";
-  //
-  // static var appleBlackRotTSource = "www.gardeningknowhow.com";
-  // static var appleBlackRotT1 = "Treating black rot on apple trees starts with sanitation. Because fungal spores overwinter on fallen leaves, mummified fruits, dead bark, and cankers, it’s important to keep all the fallen debris and dead fruit cleaned up and away from the tree.";
-  // static var appleBlackRotT2 = "During the winter, check for red cankers and remove them by cutting them out or pruning away the affected limbs at least six inches (15 cm.) beyond the wound. Destroy all infected tissue immediately and keep a watchful eye out for new signs of infection.";
-  // static var appleBlackRotT3 = "Once black rot disease is under control in your tree and you’re again harvesting healthy fruits, make sure to remove any injured or insect-invaded fruits to avoid re-infection. Although general-purpose fungicides, like copper-based sprays and lime sulfur, can be used to control black rot, nothing will improve apple black rot like removing all sources of spores.";
-  //
-  // static var appleCederRustTSource = "planetnatural.com";
-  // static var appleCederRustT1 = "Rake up and dispose of fallen leaves and other debris from under trees.";
-  // static var appleCederRustT2 = "Remove galls from infected junipers. In some cases, juniper plants should be removed entirely.";
-  // static var appleCederRustT3 = "Apply preventative, disease-fighting fungicides labeled for use on apples weekly, starting with bud break, to protect trees from spores being released by the juniper host. This occurs only once per year, so additional applications after this springtime spread are not necessary.";
-  //
-  // static var cherryPowderyMildewTSource = "pnwhandbooks.org";
-  // static var cherryPowderyMildewT1 = "Remove and destroy sucker shoots.";
-  // static var cherryPowderyMildewT2 = "Keep irrigation water off developing fruit and leaves by using irrigation that does not wet the leaves. Also, keep irrigation sets as short as possible.";
-  // static var cherryPowderyMildewT3 = "Follow cultural practices that promote good air circulation, such as pruning, and moderate shoot growth through judicious nitrogen management.";
-  //
-  // static var cornGreyLeafSpotTSource = "extension.umn.edu";
-  // static var cornGreyLeafSpotT1 = "Disease management tactics include using resistant corn hybrids, conventional tillage where appropriate, and crop rotation. Foliar fungicides can be effective if economically warranted. Typically they are only profitable on susceptible inbreds or susceptible hybrids under a combination of high risk conditions with high yield potential, prolonged humid conditions, and evidence of disease development.";
-  //
-  // static var cornNorthernLeafBlightTSource = "gardeningknowhow.com";
-  // static var cornNorthernLeafBlightT1 = "Treating northern corn leaf blight involves using fungicides. For most home gardeners this step isn’t needed, but if you have a bad infection, you may want to try this chemical treatment. The infection usually begins around the time of silking, and this is when the fungicide should be applied";
-  // static var cornNorthernLeafBlightT2 = "The fungus overwinters in plant material, so it is also important to manage infected plants. Tilling the corn into the soil is one strategy, but with a small garden it may make more sense to just remove and destroy the affected plants";
-  // static var cornNorthernLeafBlightT3 = "When you grow corn, make sure it does not stay wet for long periods of time. The fungus that causes this infection needs between six and 18 hours of leaf wetness to develop. Plant corn with enough space for airflow and water in the morning so leaves can dry throughout the day";
-  //
-  // static var grapeBlackRotTSource = "extension.psu.edu";
-  // static var grapeBlackRotT1 = "Infected prunings and mummified berries should be removed, burned, and/or buried in the soil before new growth begins in the spring. In vineyards with susceptible varieties or where black rot was a problem the previous year, early season fungicide sprays should be timed to prevent the earliest infections. Should infections become numerous, protecting against fruit rot is very difficult later in the growing season. Planting resistant varieties is strongly suggested.";
-  //
-  // static var grapeEscaTSource = "";
-  // static var grapeEscaT1 = "";
-
 
 }

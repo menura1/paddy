@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:paddy/all_screens.dart';
 import 'package:paddy/models/result_model.dart';
@@ -107,7 +108,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 height: 40.h,
                                 width: 155.w,
                                 decoration: BoxDecoration(
-                                  color: widget.detailsSelected? const Color(0xff3F66F2): const Color(0xffD6D6D6),
+                                  color: widget.detailsSelected? const Color(0xff3F66F2): const Color(0xffD1D1D1).withOpacity(0.45),
                                   borderRadius: BorderRadius.circular(5.r)
                                 ),
                                 //disease description
@@ -119,17 +120,19 @@ class _ResultScreenState extends State<ResultScreen> {
                             ),
                             InkWell(
                               onTap: (){
-                                launch("https://www.google.com/search?q=${widget.resultModel.diseaseModel.name}+treatments");
+                                setState(() {
+                                  widget.detailsSelected = false;
+                                });
                               },
                               child: Container(
                                 alignment: Alignment.center,
                                 height: 40.h,
                                 width: 155.w,
                                 decoration: BoxDecoration(
-                                  color: widget.detailsSelected? const Color(0xffD6D6D6): const Color(0xff3F66F2),
+                                  color: widget.detailsSelected? const Color(0xffD1D1D1).withOpacity(0.45): const Color(0xff3F66F2),
                                   borderRadius: BorderRadius.circular(5.r)
                                 ),
-                                child: Text("Treatments", style: TextStyle(
+                                child: Text("Remedies", style: TextStyle(
                                   color: widget.detailsSelected? const Color(0xff686868): Colors.white,
                                   fontSize: 14.sp
                                 ), textAlign: TextAlign.center,),
@@ -138,7 +141,7 @@ class _ResultScreenState extends State<ResultScreen> {
                           ],
                         ),
                         SizedBox(height: 16.h,),
-                        widget.detailsSelected? detailsTab(): treatmentsTab(),
+                        widget.detailsSelected? detailsTab(): remedyTab(widget.resultModel.diseaseModel.remedy),
                         SizedBox(height: 20.h,),
                       ],
                     ),
@@ -154,65 +157,108 @@ class _ResultScreenState extends State<ResultScreen> {
 
   //building the details tab ui
   Widget detailsTab(){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Disease details', style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w700
-            ),),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.25),
-                borderRadius: BorderRadius.circular(20)
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-              child: Text(widget.resultModel.diseaseModel.source, style: TextStyle(
-                  fontSize: 11.sp,
-                  fontWeight: FontWeight.normal,
-                  color: const Color(0xff084594)
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.blue.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(10)
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Disease details', style: TextStyle(
+                color: Color(0xff332FD0),
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500
               ),),
-            ),
-          ],
-        ),
-        SizedBox(height: 15.h,),
-        Text(widget.resultModel.diseaseModel.description,
-          style: TextStyle(
-              fontSize: 14.sp,
-            color: Colors.black87
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue.withOpacity(0.25),
+                  borderRadius: BorderRadius.circular(20)
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                child: Text(widget.resultModel.diseaseModel.source, style: TextStyle(
+                    fontSize: 11.sp,
+                    fontWeight: FontWeight.normal,
+                    color: const Color(0xff084594)
+                ),),
+              ),
+            ],
           ),
-          textAlign: TextAlign.justify,
-        )
-      ],
+          SizedBox(height: 15.h,),
+          Text(widget.resultModel.diseaseModel.description,
+            style: TextStyle(
+                fontSize: 14.sp,
+              color: Colors.black87
+            ),
+            textAlign: TextAlign.justify,
+          )
+        ],
+      ),
     );
   }
 
-  Widget treatmentsTab(){
+
+  //treatment tab
+  Widget remedyTab(String remedy){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
-
-    );
-  }
-
-  Widget treatment(String name, String description){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(name, style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w700
-        ),),
-        SizedBox(height: 5.h,),
-        Text(description,
-          style: TextStyle(
-              fontSize: 14.sp
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          decoration: BoxDecoration(
+              color: Colors.blue.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(10)
           ),
-          textAlign: TextAlign.justify,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Remedies', style: TextStyle(
+                      color: Color(0xff332FD0),
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500
+                  ),),
+                  InkWell(
+                    onTap: (){
+                      launch("https://www.google.com/search?q=${widget.resultModel.diseaseModel.name}+treatments");
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.blue.withOpacity(0.25),
+                          borderRadius: BorderRadius.circular(20)
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                      child: Row(
+                        children: [
+                          Text("Find more remedies", style: TextStyle(
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.normal,
+                              color: const Color(0xff084594)
+                          ),),
+                          SizedBox(width: 2,),
+                          Icon(
+                              Icons.search,
+                              color: const Color(0xff084594), size: 12,)
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10,),
+              Text(remedy, style: TextStyle(
+                  fontSize: 14.sp,
+
+              ), textAlign: TextAlign.justify,),
+            ],
+          ),
         ),
-        SizedBox(height: 25.h,)
       ],
     );
   }

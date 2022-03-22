@@ -241,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const Text(
                     'Easily choose a photo from the gallery or capture a photo from the device camera.',
                     style: TextStyle(
-                      fontSize: 17,
+                      fontSize: 14,
                     ),
                     textAlign: TextAlign.center,
                   ),

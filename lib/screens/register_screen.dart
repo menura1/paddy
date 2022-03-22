@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:paddy/all_screens.dart';
 import 'package:http/http.dart' as http;
+import 'package:paddy/global/global_user.dart';
+import 'package:paddy/models/user_model.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
@@ -21,16 +25,15 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
 
     return ScreenUtilInit(
-      designSize: const Size(360,640),
+      designSize: const Size(360, 640),
       builder: () => SafeArea(
         child: GestureDetector(
           //auto dismissing the keyboard
-          onTap: (){
+          onTap: () {
             FocusScopeNode currentFocus = FocusScope.of(context);
 
             if (!currentFocus.hasPrimaryFocus) {
@@ -47,87 +50,164 @@ class RegisterScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 35.h,),
-                    Text('Sign up', style: TextStyle(
-                        fontSize: 24.sp, fontWeight: FontWeight.bold, color: Color(0xff0F00FF)),),
-                    SizedBox(height: 5.h),
-                    Row(children: [
-                      Text('Already have an account?', style: TextStyle(
-                        color: Color(0xff737373), fontSize: 14.sp
-                      ),),
-                      InkWell(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => LogInScreen()));
-                        },
-                        child: Text(' Log in', style: TextStyle(
-                          color: Color(0xff3F66F2), fontSize: 14.sp, fontWeight: FontWeight.w500
-                        ),),
-                      ),
-                    ],),
-                    SizedBox(height: 20.h,),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Text(
+                      'Sign up',
+                      style: TextStyle(
+                          fontSize: 24.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff0F00FF)),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Already have an account?',
+                          style: TextStyle(
+                              color: Color(0xff737373), fontSize: 14.sp),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LogInScreen()));
+                          },
+                          child: Text(
+                            ' Log in',
+                            style: TextStyle(
+                                color: Color(0xff3F66F2),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
                     //name text field
                     buildTextField(hint: 'Full name', controller: fullName),
-                    SizedBox(height: 14.5.h,),
+                    SizedBox(
+                      height: 14.5.h,
+                    ),
                     // email field
                     buildTextField(hint: 'Email', controller: email),
-                    SizedBox(height: 14.5.h,),
+                    SizedBox(
+                      height: 14.5.h,
+                    ),
                     // phone number field
                     buildTextField(hint: 'Phone number', controller: phoneNum),
-                    SizedBox(height: 14.5.h,),
+                    SizedBox(
+                      height: 14.5.h,
+                    ),
                     // dob text field
-                    buildTextField(hint: 'Date of birth', controller: dateOfBirth),
-                    SizedBox(height: 14.5.h,),
+                    buildTextField(
+                        hint: 'Date of birth', controller: dateOfBirth),
+                    SizedBox(
+                      height: 14.5.h,
+                    ),
                     //password text field
                     buildTextField(hint: 'Password', controller: password),
-                    SizedBox(height: 14.5.h,),
+                    SizedBox(
+                      height: 14.5.h,
+                    ),
                     //re password text field
-                    buildTextField(hint: 'Re-type password', controller: rePassword),
-                    SizedBox(height: 20.h,),
-                    Text('By signing up to Paddy you agree to our', style: TextStyle(fontSize: 11.sp, color: Color(0xff737373)),),
-                    Text('terms & conditions', style: TextStyle(color: Color(0xff0F00FF), fontSize: 11.sp),),
-                    SizedBox(height: 10.h,),
+                    buildTextField(
+                        hint: 'Re-type password', controller: rePassword),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'By signing up to Paddy you agree to our',
+                      style:
+                          TextStyle(fontSize: 11.sp, color: Color(0xff737373)),
+                    ),
+                    Text(
+                      'terms & conditions',
+                      style:
+                          TextStyle(color: Color(0xff0F00FF), fontSize: 11.sp),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
                     //sign up button
                     InkWell(
-                      onTap: (){
-                        http.post(Uri.parse(""),body:{
-                          "email": email.text,
-                          "password": password.text,
-                        } );
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                      onTap: () async {
+                        await http.post(
+                            Uri.parse(
+                                "https://paddy-backend.herokuapp.com/adduser"),
+                            body: {
+                              "email": email.text,
+                              "name": fullName.text,
+                              "phoneNumber": phoneNum.text,
+                              "dateOfBirth": dateOfBirth.text,
+                              "password": password.text,
+                            }).then((value) {
+                          print(value.body);
+                          var response = jsonDecode(value.body);
+                          if (response["suceess"]) {
+                            GlobalUser.currentUser = User(
+                                name: fullName.text,
+                                email: email.text,
+                                phoneNum: phoneNum.text,
+                                dateOfBirth: dateOfBirth.text);
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen()));
+                          }
+                        });
                       },
                       child: Container(
                         alignment: Alignment.center,
-                        padding: EdgeInsets.symmetric(vertical: 10.h,),
+                        padding: EdgeInsets.symmetric(
+                          vertical: 10.h,
+                        ),
                         // width: double.infinity,
                         decoration: BoxDecoration(
-                          color: Color(0xff0F00FF),
-                          borderRadius: BorderRadius.circular(6.r)
+                            color: Color(0xff0F00FF),
+                            borderRadius: BorderRadius.circular(6.r)),
+                        child: Text(
+                          'Sign up',
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 14.sp),
                         ),
-                        child: Text('Sign up', style: TextStyle(color: Colors.white, fontSize: 14.sp),),
                       ),
                     ),
-                    SizedBox(height: 10.h,),
+                    SizedBox(
+                      height: 10.h,
+                    ),
                     //google sign up button
                     InkWell(
-                      onTap: (){},
+                      onTap: () {},
                       child: Container(
                         alignment: Alignment.center,
-                        padding: EdgeInsets.symmetric(vertical: 10.h,),
+                        padding: EdgeInsets.symmetric(
+                          vertical: 10.h,
+                        ),
                         // width: double.infinity,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Color(0xffB9B9B9)),
+                            border: Border.all(color: Color(0xffB9B9B9)),
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(6.r)
-                        ),
+                            borderRadius: BorderRadius.circular(6.r)),
                         child: Row(
-                          mainAxisAlignment : MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
-                              height: 19.h,
+                                height: 19.h,
                                 child: Image.asset('images/google.png')),
-                            SizedBox(width: 10.w,),
-                            Text('Google', style: TextStyle(
-                                color: Colors.black, fontSize: 14.sp, fontWeight: FontWeight.bold),),
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Text(
+                              'Google',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ],
                         ),
                       ),
@@ -144,12 +224,12 @@ class RegisterScreen extends StatelessWidget {
   }
 
   //building a text field
-  Widget buildTextField({required String hint, required TextEditingController controller}){
+  Widget buildTextField(
+      {required String hint, required TextEditingController controller}) {
     return Container(
       decoration: BoxDecoration(
           color: Colors.grey.withOpacity(0.20),
-          borderRadius: BorderRadius.circular(6.r)
-      ),
+          borderRadius: BorderRadius.circular(6.r)),
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       margin: EdgeInsets.symmetric(horizontal: 0.w),
       child: TextField(
@@ -158,11 +238,11 @@ class RegisterScreen extends StatelessWidget {
             contentPadding: EdgeInsets.symmetric(vertical: 12.h),
             border: InputBorder.none,
             hintText: hint,
-            hintStyle: TextStyle(fontSize: 14.sp, color: Color(0xff737373), fontWeight: FontWeight.normal)
-        ),
+            hintStyle: TextStyle(
+                fontSize: 14.sp,
+                color: Color(0xff737373),
+                fontWeight: FontWeight.normal)),
       ),
     );
   }
-
 }
-
