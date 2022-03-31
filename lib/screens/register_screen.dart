@@ -1,37 +1,34 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:paddy/all_screens.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paddy/global/global_user.dart';
 import 'package:paddy/models/user_model.dart';
 import 'package:paddy/services/auth_service.dart';
 import 'package:paddy/services/validation_service.dart';
+import 'home_screen.dart';
+import 'login_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
 
   //controls the name text field
-  TextEditingController email = TextEditingController();
+  final TextEditingController email = TextEditingController();
   //controls the email text field
-  TextEditingController fullName = TextEditingController();
+  final TextEditingController fullName = TextEditingController();
   //controls the phone number text field
-  TextEditingController phoneNum = TextEditingController();
+  final TextEditingController phoneNum = TextEditingController();
   //controls the password text field
-  TextEditingController password = TextEditingController();
+  final TextEditingController password = TextEditingController();
   //controls the confirm password text field
-  TextEditingController rePassword = TextEditingController();
+  final TextEditingController rePassword = TextEditingController();
   //controls the date of birth text field
-  TextEditingController dateOfBirth = TextEditingController();
+  final TextEditingController dateOfBirth = TextEditingController();
 
-  AuthService auth = AuthService();
-  ValidationService validationService = ValidationService();
+  final AuthService auth = AuthService();
+  final ValidationService validationService = ValidationService();
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
 
     return ScreenUtilInit(
       designSize: const Size(360, 640),
@@ -63,26 +60,26 @@ class RegisterScreen extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 24.sp,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xff0F00FF)),
+                          color: const Color(0xff0F00FF)),
                     ),
                     Row(
                       children: [
                         Text(
                           'Already have an account?',
                           style: TextStyle(
-                              color: Color(0xff737373), fontSize: 14.sp),
+                              color: const Color(0xff737373), fontSize: 14.sp),
                         ),
                         InkWell(
                           onTap: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LogInScreen()));
+                                    builder: (context) => const LogInScreen()));
                           },
                           child: Text(
                             ' Log in',
                             style: TextStyle(
-                                color: Color(0xff3F66F2),
+                                color: const Color(0xff3F66F2),
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500),
                           ),
@@ -127,12 +124,12 @@ class RegisterScreen extends StatelessWidget {
                     Text(
                       'By signing up to Paddy you agree to our',
                       style:
-                          TextStyle(fontSize: 11.sp, color: Color(0xff737373)),
+                          TextStyle(fontSize: 11.sp, color: const Color(0xff737373)),
                     ),
                     Text(
                       'terms & conditions',
                       style:
-                          TextStyle(color: Color(0xff0F00FF), fontSize: 11.sp),
+                          TextStyle(color: const Color(0xff0F00FF), fontSize: 11.sp),
                     ),
                     SizedBox(
                       height: 10.h,
@@ -157,7 +154,6 @@ class RegisterScreen extends StatelessWidget {
                               phoneNumber: phoneNum.text,
                               dateOfBirth: dateOfBirth.text
                           );
-                          print("$response");
                           if(response["success"] == true){
                             GlobalUser.currentUser = User(
                                 name: fullName.text,
@@ -189,7 +185,7 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         // width: double.infinity,
                         decoration: BoxDecoration(
-                            color: Color(0xff0F00FF),
+                            color: const Color(0xff0F00FF),
                             borderRadius: BorderRadius.circular(6.r)),
                         child: Text(
                           'Sign up',
@@ -211,7 +207,7 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         // width: double.infinity,
                         decoration: BoxDecoration(
-                            border: Border.all(color: Color(0xffB9B9B9)),
+                            border: Border.all(color: const Color(0xffB9B9B9)),
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(6.r)),
                         child: Row(
@@ -262,7 +258,7 @@ class RegisterScreen extends StatelessWidget {
             hintText: hint,
             hintStyle: TextStyle(
                 fontSize: 14.sp,
-                color: Color(0xff737373),
+                color: const Color(0xff737373),
                 fontWeight: FontWeight.normal)),
       ),
     );

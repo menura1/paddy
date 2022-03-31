@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:paddy/all_screens.dart';
 import 'package:paddy/global/global_user.dart';
 import 'package:paddy/models/user_model.dart';
 import 'package:paddy/screens/about_us_screen.dart';
 import 'package:paddy/screens/faqs_screen.dart';
+import '../screens/contact_screen.dart';
+import '../screens/help_screen.dart';
+import '../screens/home_screen.dart';
+import '../screens/login_screen.dart';
+import '../screens/profile_screen.dart';
 
 class SideBarMenu extends StatelessWidget {
   const SideBarMenu({Key? key}) : super(key: key);

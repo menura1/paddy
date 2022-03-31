@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:paddy/all_screens.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:paddy/screens/results_screen.dart';
 import 'package:paddy/services/ml_service.dart';
+import '../components/side_bar_menu.dart';
 import '../services/disease_data.dart';
 import '../models/result_model.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    super.initState();
     //loading the tflite model on the initState
     mlService.loadModel();
   }
@@ -95,9 +97,6 @@ class _HomeScreenState extends State<HomeScreen> {
           //checking if the ignoring list contains the index of the result
           if(!healthyIndexes.contains(result[0]['index'])){
 
-            //extracting the disease label (disease name)
-            String label = result[0]['label'];
-
             //extracting the confidence of the prediction and formatting it
             double confidence = double.parse(result[0]['confidence'].toStringAsFixed(2)) * 100;
 
@@ -124,7 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
           //if the leaf is healthy then showing a toast
           else {
-            print('It looks like the leaf is healthy!');
             Fluttertoast.showToast(
                 msg: 'It looks like the leaf is healthy!',
                 toastLength: Toast.LENGTH_LONG,
@@ -137,7 +135,6 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         //if the model fails to predict then showing a toast
         else{
-          print('Couldn\'t predict, please try again!');
           Fluttertoast.showToast(
               msg: 'Couldn\'t predict, please try again!',
               toastLength: Toast.LENGTH_LONG,

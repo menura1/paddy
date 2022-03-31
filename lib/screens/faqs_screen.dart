@@ -42,7 +42,7 @@ class FaqsScreen extends StatelessWidget {
                 buildQuestion(
                     question: "How can I get the app to my phone?",
                     answer:
-                        "Android users can download the app through playstore and iphone users can download through the apple store."),
+                        "Android users can download the app through Google Play Store and iphone users can download using the apple store."),
                 buildQuestion(
                     question: "Is this app free of charge?",
                     answer:

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:paddy/all_screens.dart';
 import 'package:paddy/screens/onboarding_screen.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import 'login_screen.dart';
+
 class SplashScreen extends StatefulWidget {
-  SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -33,26 +33,26 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
-  initState() {
+  void initState() {
+    super.initState();
     checkFirstOpen();
   }
 
-  checkFirstOpen() async{
+  checkFirstOpen() async {
     // Read value
-    var value =  await storage.read(key: "firstOpen");
-    bool firstOpen = (value != "false") ? true: false;
+    var value = await storage.read(key: "firstOpen");
+    bool firstOpen = (value != "false") ? true : false;
 
-    if(firstOpen){
+    if (firstOpen) {
       await storage.write(key: "firstOpen", value: "false");
-      Future.delayed(const Duration(milliseconds: 1500), (){
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => OnBoardingScreen()));
+      Future.delayed(const Duration(milliseconds: 1500), () {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const OnBoardingScreen()));
       });
-    }
-    else{
-      Future.delayed(const Duration(milliseconds: 1500), (){
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LogInScreen()));
+    } else {
+      Future.delayed(const Duration(milliseconds: 1500), () {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const LogInScreen()));
       });
     }
   }

@@ -1,9 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:paddy/all_screens.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:paddy/screens/register_screen.dart';
 import 'package:paddy/services/auth_service.dart';
 import 'package:paddy/services/validation_service.dart';
+
+import 'home_screen.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({Key? key}) : super(key: key);
@@ -47,7 +49,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     SizedBox(
                       height: 80.h,
                     ),
-                    //logo sction
+                    //logo section
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       Text(
                         'PADDY',
@@ -122,7 +124,6 @@ class _LogInScreenState extends State<LogInScreen> {
 
                         if(validation['valid']){
                           var response = await auth.login(email: email.text, password: password.text);
-                          print("$response");
                           if(response["success"] == true){
                             Navigator.pushReplacement(
                                 context,
