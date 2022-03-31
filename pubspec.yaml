@@ -42,8 +42,10 @@ dependencies:
   http: ^0.13.4
   flutter_lints: ^1.0.0
   flutter_screenutil: ^5.3.1
-  device_preview: ^1.0.0
   fluttertoast: ^8.0.9
+  smooth_page_indicator: ^1.0.0+2
+  flutter_secure_storage: ^5.0.2
+  geolocator: ^8.2.0
 
 dev_dependencies:
   flutter_test:

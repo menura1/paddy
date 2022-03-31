@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:paddy/services/disease_data.dart';
 import 'package:paddy/services/image_pick_service.dart';
 import 'package:provider/provider.dart';
 import 'all_screens.dart';
 
-void main() {
+Future<void> main() async {
   DiseaseData().init();
   runApp(
     MaterialApp(
@@ -13,7 +14,7 @@ void main() {
         primarySwatch: Colors.blue,
         fontFamily: 'Poppins',
       ),
-      home: Paddy(),
+      home: const Paddy(),
     ),
   );
 }
@@ -26,7 +27,7 @@ class Paddy extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => ImagePick(),
       builder: (BuildContext context, child) {
-        return LogInScreen();
+        return HomeScreen();
       },
     );
   }

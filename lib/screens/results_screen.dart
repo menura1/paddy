@@ -74,7 +74,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               child: Text('${widget.resultModel.confidence.toString().length>3 ? widget.resultModel.confidence.toString().substring(0,4) : widget.resultModel.confidence
                               }%',textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 12.sp,
+                                    fontSize: 11.sp,
                                     fontWeight: FontWeight.w600
                                 ),
                               ),
@@ -83,8 +83,10 @@ class _ResultScreenState extends State<ResultScreen> {
                             Text('Confidence', style: TextStyle(
                                 fontSize: 13.sp,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.blueAccent
-                            ),)
+                              color: Color(0xff332FD0),
+                            ),),
+                            Spacer(),
+                            Icon(Icons.info, color: Color(0xff332FD0),)
                           ],
                         ),
                         SizedBox(height: 10.h,),
@@ -108,7 +110,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 height: 40.h,
                                 width: 155.w,
                                 decoration: BoxDecoration(
-                                  color: widget.detailsSelected? const Color(0xff3F66F2): const Color(0xffD1D1D1).withOpacity(0.45),
+                                  color: widget.detailsSelected? const Color(0xff332FD0): const Color(0xffD1D1D1).withOpacity(0.45),
                                   borderRadius: BorderRadius.circular(5.r)
                                 ),
                                 //disease description
@@ -129,7 +131,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 height: 40.h,
                                 width: 155.w,
                                 decoration: BoxDecoration(
-                                  color: widget.detailsSelected? const Color(0xffD1D1D1).withOpacity(0.45): const Color(0xff3F66F2),
+                                  color: widget.detailsSelected? const Color(0xffD1D1D1).withOpacity(0.45): const Color(0xff332FD0),
                                   borderRadius: BorderRadius.circular(5.r)
                                 ),
                                 child: Text("Remedies", style: TextStyle(
@@ -172,7 +174,7 @@ class _ResultScreenState extends State<ResultScreen> {
               Text('Disease details', style: TextStyle(
                 color: Color(0xff332FD0),
                   fontSize: 16.sp,
-                  fontWeight: FontWeight.w500
+                  fontWeight: FontWeight.w600
               ),),
               Container(
                 decoration: BoxDecoration(
@@ -222,7 +224,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   Text('Remedies', style: TextStyle(
                       color: Color(0xff332FD0),
                       fontSize: 16.sp,
-                      fontWeight: FontWeight.w500
+                      fontWeight: FontWeight.w600
                   ),),
                   InkWell(
                     onTap: (){

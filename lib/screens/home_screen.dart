@@ -160,12 +160,12 @@ class _HomeScreenState extends State<HomeScreen> {
       'PADDY',
       style: TextStyle(fontWeight: FontWeight.bold),
     ),
-    actions: const [
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        child: Icon(Icons.notifications_none_outlined),
-      )
-    ],
+    // actions: const [
+    //   Padding(
+    //     padding: EdgeInsets.symmetric(horizontal: 15),
+    //     child: Icon(Icons.notifications_none_outlined),
+    //   )
+    // ],
   );
 
 

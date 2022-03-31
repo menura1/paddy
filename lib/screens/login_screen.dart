@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:paddy/all_screens.dart';
 import 'package:http/http.dart' as http;
+import 'package:paddy/services/auth_service.dart';
+import 'package:paddy/services/validation_service.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({Key? key}) : super(key: key);
@@ -16,6 +18,8 @@ class _LogInScreenState extends State<LogInScreen> {
   //controls the name text field
   TextEditingController password = TextEditingController();
 
+  AuthService auth = AuthService();
+  ValidationService validationService = ValidationService();
 
   @override
   Widget build(BuildContext context) {
@@ -111,17 +115,34 @@ class _LogInScreenState extends State<LogInScreen> {
                     //login button
                     InkWell(
                       onTap: () async {
-                        await http.post(Uri.parse("https://paddy-backend.herokuapp.com/authenticate"),body:{
-                          "name": email.text,
-                          "password": password.text,
-                        } ).then((value) => {
-                          print(value.body)
-                        });
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomeScreen()));
-                      },
+                        var validation = validationService.loginValidation(
+                            email: email.text,
+                            password: password.text
+                        );
+
+                        if(validation['valid']){
+                          var response = await auth.login(email: email.text, password: password.text);
+                          print("$response");
+                          if(response["success"] == true){
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const HomeScreen()));
+                          }
+                          else{
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(response['msg']))
+                            );
+                          }
+                         }
+                        else{
+                          String msg = validation['msg'];
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(msg))
+                          );
+                        }
+                        },
+
                       child: Container(
                         alignment: Alignment.center,
                         decoration: BoxDecoration(

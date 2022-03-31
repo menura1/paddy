@@ -6,6 +6,8 @@ import 'package:paddy/all_screens.dart';
 import 'package:http/http.dart' as http;
 import 'package:paddy/global/global_user.dart';
 import 'package:paddy/models/user_model.dart';
+import 'package:paddy/services/auth_service.dart';
+import 'package:paddy/services/validation_service.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
@@ -22,6 +24,9 @@ class RegisterScreen extends StatelessWidget {
   TextEditingController rePassword = TextEditingController();
   //controls the date of birth text field
   TextEditingController dateOfBirth = TextEditingController();
+
+  AuthService auth = AuthService();
+  ValidationService validationService = ValidationService();
 
   @override
   Widget build(BuildContext context) {
@@ -135,19 +140,25 @@ class RegisterScreen extends StatelessWidget {
                     //sign up button
                     InkWell(
                       onTap: () async {
-                        await http.post(
-                            Uri.parse(
-                                "https://paddy-backend.herokuapp.com/adduser"),
-                            body: {
-                              "email": email.text,
-                              "name": fullName.text,
-                              "phoneNumber": phoneNum.text,
-                              "dateOfBirth": dateOfBirth.text,
-                              "password": password.text,
-                            }).then((value) {
-                          print(value.body);
-                          var response = jsonDecode(value.body);
-                          if (response["suceess"]) {
+                        //sending the register request to the backend
+                        Map result = validationService.registrationValidation(
+                            name: fullName.text, 
+                            email: email.text, 
+                            phoneNumber: phoneNum.text, 
+                            password: password.text, 
+                            rePassword: rePassword.text
+                        );
+                        //if the request is a success then creating the global user
+                        if(result['valid']){
+                          var response = await auth.register(
+                              email: email.text,
+                              password: password.text,
+                              name: fullName.text,
+                              phoneNumber: phoneNum.text,
+                              dateOfBirth: dateOfBirth.text
+                          );
+                          print("$response");
+                          if(response["success"] == true){
                             GlobalUser.currentUser = User(
                                 name: fullName.text,
                                 email: email.text,
@@ -156,9 +167,20 @@ class RegisterScreen extends StatelessWidget {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomeScreen()));
+                                    builder: (context) => const HomeScreen()));
                           }
-                        });
+                          else{
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(response['msg']))
+                            );
+                          }
+                        }
+                        
+                        else{
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(result['msg']))
+                          );
+                        }
                       },
                       child: Container(
                         alignment: Alignment.center,
