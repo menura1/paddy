@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paddy/screens/splash_screen.dart';
 import 'package:paddy/services/disease_data.dart';
-import 'package:paddy/services/image_pick_service.dart';
-import 'package:provider/provider.dart';
 
 Future<void> main() async {
   DiseaseData().init();
@@ -22,11 +20,7 @@ class Paddy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ImagePick(),
-      builder: (BuildContext context, child) {
-        return const SplashScreen();
-      },
-    );
+    return const SplashScreen();
+
   }
 }
