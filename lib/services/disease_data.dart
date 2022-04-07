@@ -109,7 +109,7 @@ class DiseaseData{
         source: "extension.wvu.edu",
         index: 18);
 
-    diseases[20] = DiseaseModel(
+    diseases[21] = DiseaseModel(
         name: 'Potato Early blight',
         description: potatoEarlyBlight,
         remedy: "To treat the Potato Early blight, prune plants to improve air circulation and reduce fungal problems. Moreover, keep the soil under plants clean and free of garden debris. Potato Early blight can be prevented by planting potato varieties that are resistant to the disease",

@@ -32,17 +32,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   child: PageView(
                     controller: controller,
                     children: [
-                      page1(
+                      page(
                           title: "Welcome to Paddy!",
                           des:
                               "Identify leaf diseases and find remedies for them within minutes.",
                           imgPath: "images/ob1.png"),
-                      page1(
+                      page(
                           title: "Works Offline.",
                           des:
                               "No internet? No worries. Paddy can identify leaf diseases completely offline. ",
                           imgPath: "images/ob2.png"),
-                      page1(
+                      page(
                           title: "Broad compatibility.",
                           des:
                               "Paddy works with 25+ most common leaf diseases on more than 10 major plants. ",
@@ -129,7 +129,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const HomeScreen()));
+                                          const LogInScreen()));
                             },
                             child: Container(
                               margin: const EdgeInsets.symmetric(
@@ -154,7 +154,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     );
   }
 
-  Widget page1(
+  Widget page(
       {required String title, required String des, required String imgPath}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),

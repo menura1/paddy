@@ -53,7 +53,20 @@ class RegisterScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 15.h,
+                      height: 20.h,
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.pushReplacement(
+                              context, MaterialPageRoute(builder: (context)=>const HomeScreen()));
+                        },
+                        child: const Text('Skip', style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                        ),),
+                      ),
+
                     ),
                     Text(
                       'Sign up',
@@ -104,12 +117,12 @@ class RegisterScreen extends StatelessWidget {
                     SizedBox(
                       height: 14.5.h,
                     ),
-                    // dob text field
-                    buildTextField(
-                        hint: 'Date of birth', controller: dateOfBirth),
-                    SizedBox(
-                      height: 14.5.h,
-                    ),
+                    // // dob text field
+                    // buildTextField(
+                    //     hint: 'Date of birth', controller: dateOfBirth),
+                    // SizedBox(
+                    //   height: 14.5.h,
+                    // ),
                     //password text field
                     buildTextField(hint: 'Password', controller: password),
                     SizedBox(

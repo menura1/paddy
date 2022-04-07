@@ -47,7 +47,25 @@ class _LogInScreenState extends State<LogInScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 80.h,
+                      height: 20.h,
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomeScreen()));
+                        },
+                        child: const Text(
+                          'Skip',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 40.h,
                     ),
                     //logo section
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -118,32 +136,26 @@ class _LogInScreenState extends State<LogInScreen> {
                     InkWell(
                       onTap: () async {
                         var validation = validationService.loginValidation(
-                            email: email.text,
-                            password: password.text
-                        );
+                            email: email.text, password: password.text);
 
-                        if(validation['valid']){
-                          var response = await auth.login(email: email.text, password: password.text);
-                          if(response["success"] == true){
+                        if (validation['valid']) {
+                          var response = await auth.login(
+                              email: email.text, password: password.text);
+                          if (response["success"] == true) {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const HomeScreen()));
-                          }
-                          else{
+                          } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(response['msg']))
-                            );
+                                SnackBar(content: Text(response['msg'])));
                           }
-                         }
-                        else{
+                        } else {
                           String msg = validation['msg'];
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(msg))
-                          );
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(content: Text(msg)));
                         }
-                        },
-
+                      },
                       child: Container(
                         alignment: Alignment.center,
                         decoration: BoxDecoration(

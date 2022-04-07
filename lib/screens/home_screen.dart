@@ -1,13 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lottie/lottie.dart';
 import 'package:paddy/screens/results_screen.dart';
+import 'package:paddy/services/location_service.dart';
 import 'package:paddy/services/ml_service.dart';
 import '../components/side_bar_menu.dart';
 import '../services/disease_data.dart';
 import '../models/result_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../services/weather_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -25,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     //loading the tflite model on the initState
     mlService.loadModel();
+    getWeather();
   }
 
 
@@ -92,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
         if (result.isNotEmpty) {
 
           //this list contains the indexes of the healthy classes that need to be ignored
-          List<int> healthyIndexes = [3,4,6,10,14,17,19,22,23,24,27,37];
+          List<int> healthyIndexes = [3,4,6,10,14,17,19,23,24,27,37];
 
           //checking if the ignoring list contains the index of the result
           if(!healthyIndexes.contains(result[0]['index'])){
@@ -165,6 +171,9 @@ class _HomeScreenState extends State<HomeScreen> {
     // ],
   );
 
+  String? temp;
+  String? humidity;
+
 
   //build method
   @override
@@ -185,7 +194,17 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: const Color(0xffF7F7F7),
             drawer: const SideBarMenu(),
             appBar: appBar,
-            body: Center(child: buildHomeBody()),
+            body: Center(
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Align(
+                      alignment: Alignment.topRight,
+                        child: weatherWidget()),
+                    buildHomeBody(),
+                  ],
+                )),
           ),
         ),
       ),
@@ -200,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 65),
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 65),
           child: Card(
             color: Colors.white,
             shape: RoundedRectangleBorder(
@@ -217,34 +236,36 @@ class _HomeScreenState extends State<HomeScreen> {
                     'GET STARTED',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 24,
+                        fontSize: 22,
                         color: Color(0xff0F00FF)),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+
+                  SizedBox(height: 100,
+                      child: Lottie.asset('images/plantanimation.json')),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  const Text(
+                    'Identify leaf diseases & find remedies within seconds!',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    'Identify leaf diseases within seconds!',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  SizedBox(height: 100, child: Image.asset('images/plant.png')),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  const Text(
-                    'Easily choose a photo from the gallery or capture a photo from the device camera.',
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
+                  // const Text(
+                  //   'Easily choose a photo from the gallery or capture a photo from the device camera.',
+                  //   style: TextStyle(
+                  //     fontSize: 14,
+                  //   ),
+                  //   textAlign: TextAlign.center,
+                  // ),
+                  // const SizedBox(
+                  //   height: 25,
+                  // ),
                   InkWell(
                     onTap: () {
                       setState(() {
@@ -269,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         const SizedBox(
-          height: 5,
+          height: 30,
         ),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 20.w),
@@ -304,5 +325,43 @@ class _HomeScreenState extends State<HomeScreen> {
         )
       ],
     );
+  }
+  
+  Widget weatherWidget(){
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+      padding: const EdgeInsets.all(5.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.grey.withOpacity(0.1)
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 40,
+              child: Image.asset('images/weather.png')),
+          const SizedBox(width: 10,),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+            Text(temp??'',
+              style: TextStyle(fontSize: 14, color: Colors.black.withOpacity(0.6)),),
+            Text(humidity??'',
+              style: TextStyle(fontSize: 14, color: Colors.black.withOpacity(0.6)),),
+          ],)
+        ],
+      ),
+    );
+  }
+
+  void getWeather() async{
+    await WeatherService().getCurrentWeather().then((value){
+      setState(() {
+        temp = value['temp'].toString()+' °F';
+        humidity = value['humidity'].toString()+' %';
+      });
+    });
   }
 }
