@@ -289,7 +289,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         const SizedBox(
-          height: 30,
+          height: 50,
         ),
         GestureDetector(
           onTap: () {
@@ -299,7 +299,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   return AlertDialog(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
-                      content: ImageTips());
+                      content: const ImageTips());
                 });
           },
           child: Container(
@@ -406,7 +406,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await WeatherService().getCurrentWeather().then((value) {
       setState(() {
         weatherLoading = false;
-        temp = value['temp'].toString().substring(0,5) + ' °C';
+        temp = value['temp'].toString().substring(0, 5) + ' °C';
         main = value['main'];
       });
     });
