@@ -1,10 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:paddy/screens/forgot_password_screen.dart';
 import 'package:paddy/screens/register_screen.dart';
 import 'package:paddy/services/auth_service.dart';
 import 'package:paddy/services/validation_service.dart';
 
+import '../global/global_user.dart';
 import 'home_screen.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -22,6 +24,8 @@ class _LogInScreenState extends State<LogInScreen> {
 
   AuthService auth = AuthService();
   ValidationService validationService = ValidationService();
+
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +51,25 @@ class _LogInScreenState extends State<LogInScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 80.h,
+                      height: 20.h,
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomeScreen()));
+                        },
+                        child: const Text(
+                          'Skip',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 40.h,
                     ),
                     //logo section
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -102,7 +124,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => RegisterScreen()));
+                                    builder: (context) => const ForgotPasswordScreen()));
                           },
                           child: Text(
                             'Forgot password?',
@@ -117,33 +139,43 @@ class _LogInScreenState extends State<LogInScreen> {
                     //login button
                     InkWell(
                       onTap: () async {
+                        setState(() {
+                          loading = true;
+                        });
                         var validation = validationService.loginValidation(
-                            email: email.text,
-                            password: password.text
-                        );
+                            email: email.text, password: password.text);
 
-                        if(validation['valid']){
-                          var response = await auth.login(email: email.text, password: password.text);
-                          if(response["success"] == true){
+                        if (validation['valid']) {
+                          var response = await auth.login(
+                              email: email.text, password: password.text);
+                          if (response["success"] == true) {
+                            GlobalUser.authToken = response['token'];
+                            await auth.getInfo();
+
+                            setState(() {
+                              loading = false;
+                            });
+
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const HomeScreen()));
-                          }
-                          else{
+                          } else {
+                            setState(() {
+                              loading = false;
+                            });
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(response['msg']))
-                            );
+                                SnackBar(content: Text(response['msg'])));
                           }
-                         }
-                        else{
+                        } else {
+                          setState(() {
+                            loading = false;
+                          });
                           String msg = validation['msg'];
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(msg))
-                          );
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(content: Text(msg)));
                         }
-                        },
-
+                      },
                       child: Container(
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
@@ -151,12 +183,25 @@ class _LogInScreenState extends State<LogInScreen> {
                             color: const Color(0xff0F00FF)),
                         padding: EdgeInsets.symmetric(vertical: 15.h),
                         margin: EdgeInsets.symmetric(horizontal: 0.w),
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 15.sp),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Login',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 15.sp),
+                            ),
+                            const SizedBox(width: 10,),
+                            Visibility(
+                              visible: loading,
+                              child: const SizedBox(
+                                height: 15,
+                                  width: 15,
+                                  child: CircularProgressIndicator(color: Colors.white,)),
+                            )
+                          ],
                         ),
                       ),
                     ),
@@ -263,5 +308,12 @@ class _LogInScreenState extends State<LogInScreen> {
                 fontWeight: FontWeight.normal)),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    email.dispose();
+    password.dispose();
   }
 }

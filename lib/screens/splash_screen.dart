@@ -22,9 +22,17 @@ class _SplashScreenState extends State<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text(
-            'PADDY',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'PADDY',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),
+              ),
+              SizedBox(
+                  height: 50,
+                  child: Image.asset('images/leaficon.png'))
+            ],
           ),
           Lottie.asset("images/75789-pot-plant.json", repeat: false)
         ],

@@ -7,24 +7,35 @@ import 'package:paddy/services/validation_service.dart';
 import 'home_screen.dart';
 import 'login_screen.dart';
 
-class RegisterScreen extends StatelessWidget {
-  RegisterScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   //controls the name text field
   final TextEditingController email = TextEditingController();
+
   //controls the email text field
   final TextEditingController fullName = TextEditingController();
+
   //controls the phone number text field
   final TextEditingController phoneNum = TextEditingController();
+
   //controls the password text field
   final TextEditingController password = TextEditingController();
+
   //controls the confirm password text field
   final TextEditingController rePassword = TextEditingController();
-  //controls the date of birth text field
-  final TextEditingController dateOfBirth = TextEditingController();
 
+  //instance of the authentication class
   final AuthService auth = AuthService();
+
   final ValidationService validationService = ValidationService();
+
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +64,24 @@ class RegisterScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 15.h,
+                      height: 20.h,
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomeScreen()));
+                        },
+                        child: const Text(
+                          'Skip',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ),
                     Text(
                       'Sign up',
@@ -104,12 +132,12 @@ class RegisterScreen extends StatelessWidget {
                     SizedBox(
                       height: 14.5.h,
                     ),
-                    // dob text field
-                    buildTextField(
-                        hint: 'Date of birth', controller: dateOfBirth),
-                    SizedBox(
-                      height: 14.5.h,
-                    ),
+                    // // dob text field
+                    // buildTextField(
+                    //     hint: 'Date of birth', controller: dateOfBirth),
+                    // SizedBox(
+                    //   height: 14.5.h,
+                    // ),
                     //password text field
                     buildTextField(hint: 'Password', controller: password),
                     SizedBox(
@@ -123,13 +151,13 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     Text(
                       'By signing up to Paddy you agree to our',
-                      style:
-                          TextStyle(fontSize: 11.sp, color: const Color(0xff737373)),
+                      style: TextStyle(
+                          fontSize: 11.sp, color: const Color(0xff737373)),
                     ),
                     Text(
                       'terms & conditions',
-                      style:
-                          TextStyle(color: const Color(0xff0F00FF), fontSize: 11.sp),
+                      style: TextStyle(
+                          color: const Color(0xff0F00FF), fontSize: 11.sp),
                     ),
                     SizedBox(
                       height: 10.h,
@@ -137,45 +165,51 @@ class RegisterScreen extends StatelessWidget {
                     //sign up button
                     InkWell(
                       onTap: () async {
+                        setState(() {
+                          loading = true;
+                        });
                         //sending the register request to the backend
                         Map result = validationService.registrationValidation(
-                            name: fullName.text, 
-                            email: email.text, 
-                            phoneNumber: phoneNum.text, 
-                            password: password.text, 
-                            rePassword: rePassword.text
+                          name: fullName.text,
+                          email: email.text,
+                          phoneNumber: phoneNum.text,
+                          password: password.text,
+                          rePassword: rePassword.text,
                         );
                         //if the request is a success then creating the global user
-                        if(result['valid']){
+                        if (result['valid']) {
                           var response = await auth.register(
                               email: email.text,
                               password: password.text,
                               name: fullName.text,
                               phoneNumber: phoneNum.text,
-                              dateOfBirth: dateOfBirth.text
-                          );
-                          if(response["success"] == true){
+                              dateOfBirth: "dateOfBirth.text");
+                          if (response["success"] == true) {
                             GlobalUser.currentUser = User(
                                 name: fullName.text,
                                 email: email.text,
                                 phoneNum: phoneNum.text,
-                                dateOfBirth: dateOfBirth.text);
+                                dateOfBirth: "dateOfBirth.text");
+                            setState(() {
+                              loading = false;
+                            });
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const HomeScreen()));
-                          }
-                          else{
+                          } else {
+                            setState(() {
+                              loading = false;
+                            });
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(response['msg']))
-                            );
+                                SnackBar(content: Text(response['msg'])));
                           }
-                        }
-                        
-                        else{
+                        } else {
+                          setState(() {
+                            loading = false;
+                          });
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(result['msg']))
-                          );
+                              SnackBar(content: Text(result['msg'])));
                         }
                       },
                       child: Container(
@@ -187,10 +221,27 @@ class RegisterScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                             color: const Color(0xff0F00FF),
                             borderRadius: BorderRadius.circular(6.r)),
-                        child: Text(
-                          'Sign up',
-                          style:
-                              TextStyle(color: Colors.white, fontSize: 14.sp),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Sign up',
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 14.sp),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Visibility(
+                              visible: loading,
+                              child: const SizedBox(
+                                  height: 15,
+                                  width: 15,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )),
+                            )
+                          ],
                         ),
                       ),
                     ),
@@ -262,5 +313,15 @@ class RegisterScreen extends StatelessWidget {
                 fontWeight: FontWeight.normal)),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    fullName.dispose();
+    email.dispose();
+    phoneNum.dispose();
+    password.dispose();
+    rePassword.dispose();
   }
 }

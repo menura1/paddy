@@ -9,16 +9,18 @@ class AuthService {
     await http.post(
         Uri.parse("https://paddy-backend.herokuapp.com/authenticate"),
         body: {
-          "name": email,
+          "email": email,
           "password": password,
         }).then((value) {
       print(value.body);
       response = jsonDecode(value.body);
       print(response.toString());
     });
+
     return {
       'success': response["success"],
       'msg': response["msg"],
+      'token' : response["token"]
     };
   }
 
@@ -42,7 +44,7 @@ class AuthService {
       response = jsonDecode(value.body);
 
       //setting the current user
-      if (response["suceess"]) {
+      if (response["success"]) {
         GlobalUser.currentUser = User(
             name: name,
             email: email,
@@ -51,8 +53,33 @@ class AuthService {
       }
     });
     return {
-      'success': response["suceess"],
+      'success': response["success"],
       'msg': response["msg"],
     };
   }
+
+  getInfo() async{
+
+    var response;
+
+    try{
+      await http.get(
+          Uri.parse("https://paddy-backend.herokuapp.com/getinfo"),
+          headers: {
+            'Authorization' : 'Bearer ${GlobalUser.authToken}'
+          }
+      ).then((value) {
+        response = jsonDecode(value.body);
+        GlobalUser.currentUser = User(
+            name: response['name']?? response['email'],
+            email: response['email'],
+            phoneNum: response['phoneNumber']?? "0001110001",
+            dateOfBirth: '');
+      });
+    }
+    catch(e){
+      print(e.toString());
+    }
+  }
+
 }
