@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paddy/global/global_user.dart';
+import 'package:paddy/screens/reset_password_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -72,9 +73,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const SizedBox(
                   height: 15,
                 ),
-                const Text(
-                  'Ryan Reynolds',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                Text(
+                  GlobalUser.currentUser.name == ''
+                      ? 'Ryan Reynolds'
+                      : GlobalUser.currentUser.name,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 22),
                 ),
                 const SizedBox(
                   height: 20,
@@ -89,35 +93,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 buildTextField(label: "Phone number", controller: phoneNum),
                 const SizedBox(
-                  height: 10,
+                  height: 25,
                 ),
-                buildTextField(label: "Date of birth", controller: dateOfBirth),
-                const SizedBox(
-                  height: 40,
-                ),
+                // buildTextField(label: "Date of birth", controller: dateOfBirth),
+                // const SizedBox(
+                //   height: 40,
+                // ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Container(
-                      alignment: Alignment.center,
-                      width: 120,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(0.4),
-                          borderRadius: BorderRadiusDirectional.circular(8)),
-                      child: const Text(
-                        'Cancel',
-                        style: TextStyle(color: Colors.black54),
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(
+                            builder: (context)=> const ResetPasswordScreen()));
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.4),
+                            borderRadius: BorderRadiusDirectional.circular(8)),
+                        child: const Text(
+                          'Change password',
+                          style: TextStyle(color: Colors.black54),
+                        ),
                       ),
                     ),
                     const SizedBox(
                       width: 20,
                     ),
                     Container(
-                      alignment: Alignment.center,
-                      width: 120,
-                      height: 40,
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       decoration: BoxDecoration(
                           color: Colors.blue,
                           borderRadius: BorderRadiusDirectional.circular(8)),

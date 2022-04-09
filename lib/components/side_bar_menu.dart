@@ -3,6 +3,7 @@ import 'package:paddy/global/global_user.dart';
 import 'package:paddy/models/user_model.dart';
 import 'package:paddy/screens/about_us_screen.dart';
 import 'package:paddy/screens/faqs_screen.dart';
+import 'package:paddy/screens/newsletter_screen.dart';
 import '../screens/contact_screen.dart';
 import '../screens/help_screen.dart';
 import '../screens/home_screen.dart';
@@ -44,7 +45,7 @@ class SideBarMenu extends StatelessWidget {
                   title: Text(
                     GlobalUser.currentUser.name == ''
                         ? 'Hello there!'
-                        : GlobalUser.currentUser.name,
+                        : "Hello ${GlobalUser.currentUser.name}!",
                     style: const TextStyle(color: Colors.white),
                   ),
                   subtitle: Text(
@@ -79,11 +80,20 @@ class SideBarMenu extends StatelessWidget {
                   title: 'Profile',
                   icon: const Icon(Icons.account_circle),
                   ontap: () {
-                    Navigator.of(context).pop();
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ProfileScreen()));
+                    if(GlobalUser.currentUser.email==''){
+                      Navigator.of(context).pop();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LogInScreen()));
+                    }
+                    else{
+                      Navigator.of(context).pop();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ProfileScreen()));
+                    }
                   }),
               menuItem(
                   title: "FAQs",
@@ -94,6 +104,17 @@ class SideBarMenu extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) => const FaqsScreen()));
                   }),
+
+              menuItem(
+                  title: "Newsletter",
+                  icon: const Icon(Icons.mail),
+                  ontap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const NewsletterScreen()));
+                  }),
+
               menuItem(
                   title: 'About us',
                   icon: const Icon(Icons.info),
@@ -126,8 +147,8 @@ class SideBarMenu extends StatelessWidget {
                   }),
               const Spacer(),
               menuItem(
-                  title: 'Log out',
-                  icon: const Icon(Icons.logout),
+                  title: GlobalUser.currentUser.email==''? 'Login' : 'Log out',
+                  icon: Icon(GlobalUser.currentUser.email=='' ? Icons.login : Icons.logout),
                   ontap: () {
                     //removing current user
                     GlobalUser.currentUser = User(

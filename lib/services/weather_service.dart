@@ -2,9 +2,12 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:paddy/global/api_keys.dart';
+import 'package:paddy/models/weather_model.dart';
 import 'package:paddy/services/location_service.dart';
 
 class WeatherService{
+  
+  static Weather? currentWeather;
 
   Future<Map> getCurrentWeather() async{
     var locationService = LocationService();
@@ -21,6 +24,9 @@ class WeatherService{
       weather = jsonDecode(value.body);
       print(weather['main']['temp']);
       print(weather['main']['humidity']);
+      
+      currentWeather = Weather.fromJson(jsonDecode(value.body));
+      
     });
     return {
       'temp': weather['main']['temp'],
