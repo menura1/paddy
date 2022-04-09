@@ -7,7 +7,6 @@ import 'package:lottie/lottie.dart';
 import 'package:paddy/components/image_tips.dart';
 import 'package:paddy/components/weather_popup.dart';
 import 'package:paddy/screens/results_screen.dart';
-import 'package:paddy/services/location_service.dart';
 import 'package:paddy/services/ml_service.dart';
 import '../components/side_bar_menu.dart';
 import '../services/disease_data.dart';
@@ -173,6 +172,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String? temp;
   String? humidity;
 
+  bool weatherLoading = false;
+
   //build method
   @override
   Widget build(BuildContext context) {
@@ -242,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   SizedBox(
                       height: 100,
-                      child: Lottie.asset('images/plantanimation.json')),
+                      child: Lottie.asset('images/plant-home.json')),
                   const SizedBox(
                     height: 25,
                   ),
@@ -291,14 +292,13 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 30,
         ),
         GestureDetector(
-          onTap: (){
+          onTap: () {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)
-                      ),
+                          borderRadius: BorderRadius.circular(15)),
                       content: ImageTips());
                 });
           },
@@ -345,9 +345,8 @@ class _HomeScreenState extends State<HomeScreen> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)
-                ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
                   content: const WeatherPopup());
             });
       },
@@ -367,21 +366,31 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 width: 10,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    temp ?? '',
-                    style: TextStyle(
-                        fontSize: 14, color: Colors.black.withOpacity(0.6)),
-                  ),
-                  Text(
-                    humidity ?? '',
-                    style: TextStyle(
-                        fontSize: 14, color: Colors.black.withOpacity(0.6)),
-                  ),
-                ],
-              )
+              weatherLoading
+                  ? const Padding(
+                      padding: EdgeInsets.only(right: 8.0),
+                      child: SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator()),
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          temp ?? '',
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black.withOpacity(0.6)),
+                        ),
+                        Text(
+                          humidity ?? '',
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black.withOpacity(0.6)),
+                        ),
+                      ],
+                    )
             ],
           ),
         ),
@@ -390,8 +399,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void getWeather() async {
+    setState(() {
+      weatherLoading = true;
+    });
     await WeatherService().getCurrentWeather().then((value) {
       setState(() {
+        weatherLoading = false;
         temp = value['temp'].toString() + ' °F';
         humidity = value['humidity'].toString() + ' %';
       });

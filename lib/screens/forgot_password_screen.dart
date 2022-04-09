@@ -104,4 +104,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    otp.dispose();
+    newPassword.dispose();
+    rePassword.dispose();
+  }
 }

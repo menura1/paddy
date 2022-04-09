@@ -64,7 +64,9 @@ class _LogInScreenState extends State<LogInScreen> {
                         },
                         child: const Text(
                           'Skip',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Color(0xff0F00FF),
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -88,14 +90,20 @@ class _LogInScreenState extends State<LogInScreen> {
                       )
                     ]),
                     SizedBox(
-                      height: 80.h,
+                      height: 70.h,
                     ),
                     Text(
-                      'Login',
+                      'Hi there!',
                       style: TextStyle(
-                        fontSize: 35.sp,
+                        fontSize: 25.sp,
                         fontWeight: FontWeight.bold,
                         color: const Color(0xff0F00FF),
+                      ),
+                    ),
+                    Text(
+                      'Welcome back, please login to continue.',
+                      style: TextStyle(
+                        fontSize: 14.sp,
                       ),
                     ),
                     SizedBox(height: 20.sp),

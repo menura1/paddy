@@ -10,59 +10,61 @@ class OtherHelpScreen extends StatefulWidget {
 class _OtherHelpScreenState extends State<OtherHelpScreen> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Icon(Icons.arrow_back_rounded),
+    return  SafeArea(
+      child: Scaffold(
+          body: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Icon(Icons.arrow_back_rounded),
+                    ),
                   ),
-                ),
-                const Text(
-                  "OTHER",
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                buildQuestion(
-                    question: "Some feature isn’t working. What should I do?",
-                    answer:
-                    "You can re-install the app which will solve the issue most of the time. If the problem persists, please feel free to contact us."),
-                buildQuestion(
-                    question:
-                    "How can I report a bug?",
-                    answer:
-                    "All you have to do is write us an email which includes the model of your smartphone, the Android or iOS version, and the description of the bug. We will be glad for your contribution in this matter."),
-                buildQuestion(
-                    question:
-                    "I can’t find my answer here. What should I do?",
-                    answer:
-                    "You can reach us. You can find the contact information by clicking “contact us”. You are more than welcome to contact us."),
-                buildQuestion(
-                    question:
-                    "Is my information safe?",
-                    answer:
-                    "Although we require access to your gallery, we never access any photos without your permission. We will never share your personal information with anyone."),
-                buildQuestion(
-                    question:
-                    "Can I also water the plant when I use liquid fertilizer?",
-                    answer:
-                    "Yes, you can. But on the days when you’re using liquid fertilizer, make sure you don’t over or underwater the plant."),
+                  const Text(
+                    "OTHER",
+                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  buildQuestion(
+                      question: "Some feature isn’t working. What should I do?",
+                      answer:
+                      "You can re-install the app which will solve the issue most of the time. If the problem persists, please feel free to contact us."),
+                  buildQuestion(
+                      question:
+                      "How can I report a bug?",
+                      answer:
+                      "All you have to do is write us an email which includes the model of your smartphone, the Android or iOS version, and the description of the bug. We will be glad for your contribution in this matter."),
+                  buildQuestion(
+                      question:
+                      "I can’t find my answer here. What should I do?",
+                      answer:
+                      "You can reach us. You can find the contact information by clicking “contact us”. You are more than welcome to contact us."),
+                  buildQuestion(
+                      question:
+                      "Is my information safe?",
+                      answer:
+                      "Although we require access to your gallery, we never access any photos without your permission. We will never share your personal information with anyone."),
+                  buildQuestion(
+                      question:
+                      "Can I also water the plant when I use liquid fertilizer?",
+                      answer:
+                      "Yes, you can. But on the days when you’re using liquid fertilizer, make sure you don’t over or underwater the plant."),
 
-              ],
+                ],
+              ),
             ),
-          ),
-        )
+          )
+      ),
     );
   }
 
