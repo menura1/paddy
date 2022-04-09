@@ -30,9 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   //controls the confirm password text field
   final TextEditingController rePassword = TextEditingController();
 
-  //controls the date of birth text field
-  final TextEditingController dateOfBirth = TextEditingController();
-
+  //instance of the authentication class
   final AuthService auth = AuthService();
 
   final ValidationService validationService = ValidationService();
@@ -71,15 +69,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Align(
                       alignment: Alignment.topRight,
                       child: InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pushReplacement(
-                              context, MaterialPageRoute(builder: (context)=>const HomeScreen()));
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomeScreen()));
                         },
-                        child: const Text('Skip', style: TextStyle(
+                        child: const Text(
+                          'Skip',
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
-                        ),),
+                          ),
+                        ),
                       ),
-
                     ),
                     Text(
                       'Sign up',
@@ -149,13 +151,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     Text(
                       'By signing up to Paddy you agree to our',
-                      style:
-                          TextStyle(fontSize: 11.sp, color: const Color(0xff737373)),
+                      style: TextStyle(
+                          fontSize: 11.sp, color: const Color(0xff737373)),
                     ),
                     Text(
                       'terms & conditions',
-                      style:
-                          TextStyle(color: const Color(0xff0F00FF), fontSize: 11.sp),
+                      style: TextStyle(
+                          color: const Color(0xff0F00FF), fontSize: 11.sp),
                     ),
                     SizedBox(
                       height: 10.h,
@@ -168,22 +170,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         });
                         //sending the register request to the backend
                         Map result = validationService.registrationValidation(
-                            name: fullName.text,
-                            email: email.text,
-                            phoneNumber: phoneNum.text,
-                            password: password.text,
-                            rePassword: rePassword.text,
+                          name: fullName.text,
+                          email: email.text,
+                          phoneNumber: phoneNum.text,
+                          password: password.text,
+                          rePassword: rePassword.text,
                         );
                         //if the request is a success then creating the global user
-                        if(result['valid']){
+                        if (result['valid']) {
                           var response = await auth.register(
                               email: email.text,
                               password: password.text,
                               name: fullName.text,
                               phoneNumber: phoneNum.text,
-                              dateOfBirth: "dateOfBirth.text"
-                          );
-                          if(response["success"] == true){
+                              dateOfBirth: "dateOfBirth.text");
+                          if (response["success"] == true) {
                             GlobalUser.currentUser = User(
                                 name: fullName.text,
                                 email: email.text,
@@ -196,24 +197,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const HomeScreen()));
-                          }
-                          else{
+                          } else {
                             setState(() {
                               loading = false;
                             });
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(response['msg']))
-                            );
+                                SnackBar(content: Text(response['msg'])));
                           }
-                        }
-
-                        else{
+                        } else {
                           setState(() {
                             loading = false;
                           });
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(result['msg']))
-                          );
+                              SnackBar(content: Text(result['msg'])));
                         }
                       },
                       child: Container(
@@ -230,16 +226,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           children: [
                             Text(
                               'Sign up',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 14.sp),
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 14.sp),
                             ),
-                            const SizedBox(width: 10,),
+                            const SizedBox(
+                              width: 10,
+                            ),
                             Visibility(
                               visible: loading,
                               child: const SizedBox(
                                   height: 15,
                                   width: 15,
-                                  child: CircularProgressIndicator(color: Colors.white,)),
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )),
                             )
                           ],
                         ),
@@ -313,5 +313,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 fontWeight: FontWeight.normal)),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    fullName.dispose();
+    email.dispose();
+    phoneNum.dispose();
+    password.dispose();
+    rePassword.dispose();
   }
 }

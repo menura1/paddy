@@ -101,4 +101,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    currentPassword.dispose();
+    newPassword.dispose();
+    rePassword.dispose();
+  }
 }
