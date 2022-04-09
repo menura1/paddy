@@ -15,11 +15,11 @@ class Weather {
 
   factory Weather.fromJson(Map<String, dynamic> json){
     return Weather(
-        temp: json['main']['temp'],
-        feelsLike: json['main']['feels_like'],
+        temp: json['main']['temp']- 273.15,
+        feelsLike: json['main']['feels_like']- 273.15,
         humidity: json['main']['humidity'],
-        high: json['main']["temp_max"] ,
-        low: json['main']['temp_min']);
+        high: json['main']["temp_max"]- 273.15,
+        low: json['main']['temp_min']- 273.15);
   }
 
 }

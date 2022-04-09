@@ -170,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
   );
 
   String? temp;
-  String? humidity;
+  String? main;
 
   bool weatherLoading = false;
 
@@ -355,7 +355,7 @@ class _HomeScreenState extends State<HomeScreen> {
         margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
         elevation: 4,
         child: Container(
-          padding: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.all(7.0),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10), color: Colors.white),
           child: Row(
@@ -378,13 +378,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          temp ?? '',
+                          main ?? '',
                           style: TextStyle(
+                              fontWeight: FontWeight.bold,
                               fontSize: 14,
                               color: Colors.black.withOpacity(0.6)),
                         ),
                         Text(
-                          humidity ?? '',
+                          temp ?? '',
                           style: TextStyle(
                               fontSize: 14,
                               color: Colors.black.withOpacity(0.6)),
@@ -405,8 +406,8 @@ class _HomeScreenState extends State<HomeScreen> {
     await WeatherService().getCurrentWeather().then((value) {
       setState(() {
         weatherLoading = false;
-        temp = value['temp'].toString() + ' °F';
-        humidity = value['humidity'].toString() + ' %';
+        temp = value['temp'].toString().substring(0,5) + ' °C';
+        main = value['main'];
       });
     });
   }

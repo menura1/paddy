@@ -23,14 +23,16 @@ class WeatherService{
       print(value.body);
       weather = jsonDecode(value.body);
       print(weather['main']['temp']);
+      print(weather["weather"][0]['main']);
       print(weather['main']['humidity']);
       
       currentWeather = Weather.fromJson(jsonDecode(value.body));
       
     });
     return {
-      'temp': weather['main']['temp'],
-      'humidity': weather['main']['humidity']
+      'temp': weather['main']['temp']- 273.15,
+      'humidity': weather['main']['humidity'],
+      'main': weather['weather'][0]['main'].toString()
     };
   }
 
