@@ -41,7 +41,7 @@ class _WeatherPopupState extends State<WeatherPopup> {
             const SizedBox(height: 5,),
             Text('High - ${currentWeather.high.toString().substring(0,5)} °C'),
             const SizedBox(height: 5,),
-            Text('Low - ${currentWeather.low.toString().substring(0,5)} °C'),
+            Text('Low - ${currentWeather.low.toString()} °C'),
             const SizedBox(height: 15,),
             Center(
               child: GestureDetector(

@@ -279,7 +279,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           horizontal: 50, vertical: 10),
                       child: const Text(
                         'START',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white),
                       ),
                     ),
                   ),
