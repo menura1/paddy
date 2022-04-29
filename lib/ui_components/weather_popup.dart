@@ -33,15 +33,15 @@ class _WeatherPopupState extends State<WeatherPopup> {
                 fontSize: 16
               ),),
             const SizedBox(height: 15,),
-            Text('Temperature - ${currentWeather.temp.toString().substring(0,5)} °C'),
+            Text('Temperature - ${currentWeather.temp.toString()} °C'),
             const SizedBox(height: 5,),
             Text('Humidity - ${currentWeather.humidity}%'),
             const SizedBox(height: 5,),
-            Text('Feels like - ${currentWeather.feelsLike.toString().substring(0,5)} °C'),
+            Text('Feels like - ${currentWeather.feelsLike.toString()} °C'),
             const SizedBox(height: 5,),
-            Text('High - ${currentWeather.high.toString().substring(0,5)} °C'),
+            Text('High - ${currentWeather.high.toString()} °C'),
             const SizedBox(height: 5,),
-            Text('Low - ${currentWeather.low.toString().substring(0,5)} °C'),
+            Text('Low - ${currentWeather.low.toString()} °C'),
             const SizedBox(height: 15,),
             Center(
               child: GestureDetector(

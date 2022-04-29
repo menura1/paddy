@@ -12,7 +12,7 @@ class YtVideoModel{
       title: json['snippet']['title'],
       description: json['snippet']['description'],
       url: "https://www.youtube.com/watch?v=${json['id']['videoId']}",
-      thumbnailUrl: json['snippet']['thumbnails']['default']['url']
+      thumbnailUrl: json['snippet']['thumbnails']['medium']['url']
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paddy/models/result_model.dart';
+import 'package:paddy/services/yt_api_service.dart';
+import 'package:paddy/ui_components/yt_results.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ResultScreen extends StatefulWidget {
@@ -318,6 +320,79 @@ class _ResultScreenState extends State<ResultScreen> {
             ],
           ),
         ),
+        
+        //yt results
+        Container(
+          padding : const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          margin : const EdgeInsets.symmetric( vertical: 20),
+          decoration: BoxDecoration(
+              color: Colors.blue.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(10)),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Results from YouTube',
+                    style: TextStyle(
+                        color: const Color(0xff332FD0),
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      launch(
+                          "https://www.youtube.com/search?q=${widget.resultModel.diseaseModel.name}+treatments");
+                    },
+                    child: const Icon(
+                        Icons.ondemand_video_rounded,
+                      color: Color(0xff332FD0),
+                    )
+                  ),
+                ],
+              ),
+              YtResults(results: YtApiService().sendRequest(
+                  "${widget.resultModel.diseaseModel.name} treatments"),),
+              InkWell(
+                onTap: () {
+                  launch(
+                      "https://www.google.com/search?q=${widget.resultModel.diseaseModel.name}+treatments");
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.blue.withOpacity(0.25),
+                      borderRadius: BorderRadius.circular(20)),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10, vertical: 2),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Find videos on Youtube",
+                        style: TextStyle(
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.normal,
+                            color: const Color(0xff084594)),
+                      ),
+                      const SizedBox(
+                        width: 2,
+                      ),
+                      const Icon(
+                        Icons.search,
+                        color: Color(0xff084594),
+                        size: 12,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10,)
+            ],
+          )
+        ),
+        
       ],
     );
   }
