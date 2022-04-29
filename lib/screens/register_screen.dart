@@ -250,34 +250,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     //google sign up button
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(
+                            builder: (context)=> const LogInScreen()));
+                      },
                       child: Container(
                         alignment: Alignment.center,
-                        padding: EdgeInsets.symmetric(
-                          vertical: 10.h,
-                        ),
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
+                        margin: EdgeInsets.symmetric(horizontal: 0.w),
                         // width: double.infinity,
                         decoration: BoxDecoration(
-                            border: Border.all(color: const Color(0xffB9B9B9)),
+                            border: Border.all(
+                                color: const Color(0xff0F00FF), width: 2),
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(6.r)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                                height: 19.h,
-                                child: Image.asset('images/google.png')),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            Text(
-                              'Google',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                            borderRadius: BorderRadius.circular(10.r)),
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                              color: const Color(0xff0F00FF),
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),

@@ -222,7 +222,10 @@ class _LogInScreenState extends State<LogInScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                  builder: (context)=> const RegisterScreen()));
+                            },
                             child: Container(
                               alignment: Alignment.center,
                               padding: EdgeInsets.symmetric(vertical: 15.h),
@@ -230,39 +233,31 @@ class _LogInScreenState extends State<LogInScreen> {
                               // width: double.infinity,
                               decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: Colors.black45, width: 1.5),
+                                      color: const Color(0xff0F00FF), width: 2),
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(10.r)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                      height: 19.h,
-                                      child: Image.asset('images/google.png')),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  Text(
-                                    'Google',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
+                              child: Text(
+                                'Register',
+                                style: TextStyle(
+                                    color: const Color(0xff0F00FF),
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
                           SizedBox(
-                            height: 25.h,
+                            height: 20.h,
                           ),
-                          //new user button
+
+                          //skip button
                           RichText(
                             text: TextSpan(children: <TextSpan>[
                               TextSpan(
-                                  text: 'New user? ',
+                                  text: 'Sign in later?',
                                   style: TextStyle(
-                                      color: Colors.black, fontSize: 15.sp)),
+                                      color: Colors.black54,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15.sp)),
                               TextSpan(
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
@@ -270,11 +265,12 @@ class _LogInScreenState extends State<LogInScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  RegisterScreen()));
+                                                  const HomeScreen()));
                                     },
-                                  text: ' Register',
+                                  text: '  Skip',
                                   style: TextStyle(
                                       color: const Color(0xff0F00FF),
+                                      fontWeight: FontWeight.bold,
                                       fontSize: 15.sp))
                             ]),
                           )

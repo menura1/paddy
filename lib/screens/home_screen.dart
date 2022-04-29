@@ -1,14 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
-import 'package:paddy/components/image_tips.dart';
-import 'package:paddy/components/weather_popup.dart';
+import 'package:paddy/ui_components/image_tips.dart';
+import 'package:paddy/ui_components/weather_popup.dart';
 import 'package:paddy/screens/results_screen.dart';
 import 'package:paddy/services/ml_service.dart';
-import '../components/side_bar_menu.dart';
+import '../ui_components/side_bar_menu.dart';
 import '../services/disease_data.dart';
 import '../models/result_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -247,24 +246,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 25,
                   ),
-                  const Text(
+                  Text(
                     'Identify leaf diseases & find remedies within seconds!',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black.withOpacity(0.75),
+                        fontWeight: FontWeight.w500),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  // const Text(
-                  //   'Easily choose a photo from the gallery or capture a photo from the device camera.',
-                  //   style: TextStyle(
-                  //     fontSize: 14,
-                  //   ),
-                  //   textAlign: TextAlign.center,
-                  // ),
-                  // const SizedBox(
-                  //   height: 25,
-                  // ),
                   InkWell(
                     onTap: () {
                       setState(() {
@@ -280,7 +272,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: const Text(
                         'START',
                         style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
                             color: Colors.white),
                       ),
                     ),
