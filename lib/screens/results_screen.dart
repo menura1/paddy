@@ -102,10 +102,10 @@ class _ResultScreenState extends State<ResultScreen> {
                               ),
                             ),
                             const Spacer(),
-                            const Icon(
-                              Icons.info,
-                              color: Color(0xff332FD0),
-                            )
+                            SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: Image.asset('images/leaficon.png'))
                           ],
                         ),
                         SizedBox(
@@ -138,7 +138,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                         ? const Color(0xff332FD0)
                                         : const Color(0xffD1D1D1)
                                             .withOpacity(0.45),
-                                    borderRadius: BorderRadius.circular(5.r)),
+                                    borderRadius: BorderRadius.circular(12.r)),
                                 //disease description
                                 child: Text(
                                   "Details",
@@ -166,7 +166,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                         ? const Color(0xffD1D1D1)
                                             .withOpacity(0.45)
                                         : const Color(0xff332FD0),
-                                    borderRadius: BorderRadius.circular(5.r)),
+                                    borderRadius: BorderRadius.circular(12.r)),
                                 child: Text(
                                   "Remedies",
                                   style: TextStyle(
@@ -323,12 +323,14 @@ class _ResultScreenState extends State<ResultScreen> {
         
         //yt results
         Container(
+          height: MediaQuery.of(context).size.height*0.85,
           padding : const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           margin : const EdgeInsets.symmetric( vertical: 20),
           decoration: BoxDecoration(
               color: Colors.blue.withOpacity(0.1),
               borderRadius: BorderRadius.circular(10)),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -353,39 +355,10 @@ class _ResultScreenState extends State<ResultScreen> {
                   ),
                 ],
               ),
-              YtResults(results: YtApiService().sendRequest(
-                  "${widget.resultModel.diseaseModel.name} treatments"),),
-              InkWell(
-                onTap: () {
-                  launch(
-                      "https://www.google.com/search?q=${widget.resultModel.diseaseModel.name}+treatments");
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.blue.withOpacity(0.25),
-                      borderRadius: BorderRadius.circular(20)),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 2),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Find videos on Youtube",
-                        style: TextStyle(
-                            fontSize: 11.sp,
-                            fontWeight: FontWeight.normal,
-                            color: const Color(0xff084594)),
-                      ),
-                      const SizedBox(
-                        width: 2,
-                      ),
-                      const Icon(
-                        Icons.search,
-                        color: Color(0xff084594),
-                        size: 12,
-                      )
-                    ],
-                  ),
+              Expanded(
+                child: YtResults(results: YtApiService().sendRequest(
+                    "${widget.resultModel.diseaseModel.name} treatments"),
+                name: widget.resultModel.diseaseModel.name,
                 ),
               ),
               const SizedBox(height: 10,)
