@@ -34,7 +34,7 @@ class AboutUsScreen extends StatelessWidget {
                   height: 30,
                 ),
                 SizedBox(
-                    height: 250,
+                    height: 150,
                     child: ClipOval(
                         child: LottieBuilder.asset("images/about_us.json"))),
                 const SizedBox(height: 30,),

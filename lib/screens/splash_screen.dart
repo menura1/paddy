@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:is_first_run/is_first_run.dart';
 import 'package:lottie/lottie.dart';
 import 'package:paddy/screens/onboarding_screen.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,7 +12,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final storage = const FlutterSecureStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +44,12 @@ class _SplashScreenState extends State<SplashScreen> {
     checkFirstOpen();
   }
 
+  //checking if its the first launch to show onboarding screen
   checkFirstOpen() async {
     // Read value
-    var value = await storage.read(key: "firstOpen");
-    bool firstOpen = (value != "false") ? true : false;
+    bool firstTime = await IsFirstRun.isFirstRun();
 
-    if (firstOpen) {
-      await storage.write(key: "firstOpen", value: "false");
+    if (firstTime) {
       Future.delayed(const Duration(milliseconds: 1500), () {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const OnBoardingScreen()));

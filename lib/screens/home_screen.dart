@@ -11,8 +11,8 @@ import '../ui_components/side_bar_menu.dart';
 import '../services/disease_data.dart';
 import '../models/result_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../services/weather_service.dart';
+import 'help_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -152,22 +152,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  // customizing the app bar
-  var appBar = AppBar(
-    backgroundColor: const Color(0xff0F00FF),
-    centerTitle: true,
-    title: const Text(
-      'PADDY',
-      style: TextStyle(fontWeight: FontWeight.bold),
-    ),
-    // actions: const [
-    //   Padding(
-    //     padding: EdgeInsets.symmetric(horizontal: 15),
-    //     child: Icon(Icons.notifications_none_outlined),
-    //   )
-    // ],
-  );
-
   String? temp;
   String? main;
 
@@ -191,7 +175,27 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Scaffold(
             backgroundColor: const Color(0xffF7F7F7),
             drawer: const SideBarMenu(),
-            appBar: appBar,
+            appBar: AppBar(
+              backgroundColor: const Color(0xff0F00FF),
+              centerTitle: true,
+              title: const Text(
+                'PADDY',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HelpScreen()));
+                      },
+                      child: const Icon(Icons.help_rounded)),
+                )
+              ],
+            ),
             body: Center(
                 child: Column(
               // mainAxisAlignment: MainAxisAlignment.center,
@@ -239,7 +243,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 5,
                   ),
-
                   SizedBox(
                       height: 100,
                       child: Lottie.asset('images/plant-home.json')),
@@ -401,7 +404,9 @@ class _HomeScreenState extends State<HomeScreen> {
     await WeatherService().getCurrentWeather().then((value) {
       setState(() {
         weatherLoading = false;
-        temp = value['temp'].toString().substring(0, 5) + ' °C';
+        temp = value['temp'].toString().length < 4
+            ? value['temp'].toString()
+            : value['temp'].toString().substring(0, 5) + ' °C';
         main = value['main'];
       });
     });

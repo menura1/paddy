@@ -66,16 +66,7 @@ class SideBarMenu extends StatelessWidget {
                   ),
                 ),
               ),
-              menuItem(
-                  title: 'Home',
-                  icon: const Icon(Icons.home),
-                  ontap: () {
-                    Navigator.of(context).pop();
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomeScreen()));
-                  }),
+
               menuItem(
                   title: 'Profile',
                   icon: const Icon(Icons.account_circle),

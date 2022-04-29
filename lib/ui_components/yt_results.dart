@@ -77,15 +77,27 @@ class _YtResultsState extends State<YtResults> {
                                             color: Colors.black,
                                             fontWeight: FontWeight.w500),
                                       )),
-                                  Text(
-                                    snapshot.data != null
-                                        ? snapshot.data![index].channelName
-                                        : "",
-                                    style: TextStyle(
-                                        fontSize: 11,
-                                        color: Colors.black87.withOpacity(0.7),
-                                        fontWeight: FontWeight.w400),
-                                  )
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.45,
+                                    child: Text(
+                                      snapshot.data != null
+                                          ? snapshot.data![index].channelName
+                                                      .length <
+                                                  25
+                                              ? snapshot
+                                                  .data![index].channelName
+                                              : snapshot
+                                                      .data![index].channelName
+                                                      .substring(0, 25) +
+                                                  "..."
+                                          : "",
+                                      style: TextStyle(
+                                          fontSize: 11,
+                                          color: Colors.black.withOpacity(0.75),
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
                                 ],
                               )
                             ],

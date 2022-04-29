@@ -1,11 +1,9 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:paddy/screens/forgot_password_screen.dart';
 import 'package:paddy/screens/register_screen.dart';
 import 'package:paddy/services/auth_service.dart';
 import 'package:paddy/services/validation_service.dart';
-
 import '../global/global_user.dart';
 import 'home_screen.dart';
 
@@ -132,7 +130,8 @@ class _LogInScreenState extends State<LogInScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const ForgotPasswordScreen()));
+                                    builder: (context) =>
+                                        const ForgotPasswordScreen()));
                           },
                           child: Text(
                             'Forgot password?',
@@ -184,37 +183,47 @@ class _LogInScreenState extends State<LogInScreen> {
                               .showSnackBar(SnackBar(content: Text(msg)));
                         }
                       },
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
-                            color: const Color(0xff0F00FF)),
-                        padding: EdgeInsets.symmetric(vertical: 15.h),
-                        margin: EdgeInsets.symmetric(horizontal: 0.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Login',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: 15.sp),
-                            ),
-                            const SizedBox(width: 10,),
-                            Visibility(
-                              visible: loading,
-                              child: const SizedBox(
-                                height: 15,
-                                  width: 15,
-                                  child: CircularProgressIndicator(color: Colors.white,)),
-                            )
-                          ],
+                      child: Card(
+                        margin: const EdgeInsets.all(0),
+                        elevation: 7,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                        child: Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              color: const Color(0xff0F00FF)),
+                          padding: EdgeInsets.symmetric(vertical: 15.h),
+                          margin: EdgeInsets.symmetric(horizontal: 0.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Login',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 15.sp),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Visibility(
+                                visible: loading,
+                                child: const SizedBox(
+                                    height: 15,
+                                    width: 15,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 15.h,
+                      height: 12.h,
                     ),
                     //google login button
                     Center(
@@ -223,25 +232,36 @@ class _LogInScreenState extends State<LogInScreen> {
                         children: [
                           InkWell(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                  builder: (context)=> const RegisterScreen()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegisterScreen()));
                             },
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.symmetric(vertical: 15.h),
-                              margin: EdgeInsets.symmetric(horizontal: 0.w),
-                              // width: double.infinity,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: const Color(0xff0F00FF), width: 2),
-                                  color: Colors.white,
+                            child: Card(
+                              margin: const EdgeInsets.all(0),
+                              borderOnForeground: true,
+                              shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.r)),
-                              child: Text(
-                                'Register',
-                                style: TextStyle(
-                                    color: const Color(0xff0F00FF),
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.bold),
+                              elevation: 7,
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.symmetric(vertical: 12.h),
+                                margin: EdgeInsets.symmetric(horizontal: 0.w),
+                                // width: double.infinity,
+                                decoration: BoxDecoration(
+                                    // border: Border.all(
+                                    //     color: const Color(0xff0F00FF), width: 1),
+                                    color: const Color(0xff0F00FF)
+                                        .withOpacity(0.05),
+                                    borderRadius: BorderRadius.circular(10.r)),
+                                child: Text(
+                                  'Register',
+                                  style: TextStyle(
+                                      color: const Color(0xff0F00FF),
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                           ),
@@ -250,30 +270,24 @@ class _LogInScreenState extends State<LogInScreen> {
                           ),
 
                           //skip button
-                          RichText(
-                            text: TextSpan(children: <TextSpan>[
-                              TextSpan(
-                                  text: 'Sign in later?',
-                                  style: TextStyle(
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 15.sp)),
-                              TextSpan(
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const HomeScreen()));
-                                    },
-                                  text: '  Skip',
-                                  style: TextStyle(
-                                      color: const Color(0xff0F00FF),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15.sp))
-                            ]),
-                          )
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Text(
+                            'By logging in to Paddy you agree to our',
+                            style: TextStyle(
+                                fontSize: 11.sp,
+                                color: const Color(0xff737373)),
+                          ),
+                          Text(
+                            'terms & conditions',
+                            style: TextStyle(
+                                color: const Color(0xff0F00FF),
+                                fontSize: 11.sp),
+                          ),
+                          SizedBox(
+                            height: 5.h,
+                          ),
                         ],
                       ),
                     )

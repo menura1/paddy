@@ -212,36 +212,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               SnackBar(content: Text(result['msg'])));
                         }
                       },
-                      child: Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.symmetric(
-                          vertical: 10.h,
-                        ),
-                        // width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: const Color(0xff0F00FF),
+                      child: Card(
+                        margin: const EdgeInsets.all(0),
+                        elevation: 7,
+                        shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6.r)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Sign up',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 14.sp),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Visibility(
-                              visible: loading,
-                              child: const SizedBox(
-                                  height: 15,
-                                  width: 15,
-                                  child: CircularProgressIndicator(
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(
+                            vertical: 11.h,
+                          ),
+                          // width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: const Color(0xff0F00FF),
+                              borderRadius: BorderRadius.circular(6.r)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Sign up',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                     color: Colors.white,
-                                  )),
-                            )
-                          ],
+                                    fontSize: 14.sp),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Visibility(
+                                visible: loading,
+                                child: const SizedBox(
+                                    height: 15,
+                                    width: 15,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -251,25 +259,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     //google sign up button
                     InkWell(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                            builder: (context)=> const LogInScreen()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LogInScreen()));
                       },
-                      child: Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.symmetric(vertical: 10.h),
-                        margin: EdgeInsets.symmetric(horizontal: 0.w),
-                        // width: double.infinity,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: const Color(0xff0F00FF), width: 2),
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10.r)),
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                              color: const Color(0xff0F00FF),
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.bold),
+                      child: Card(
+                        margin: const EdgeInsets.all(0),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6.r)),
+                        elevation: 7,
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(vertical: 10.h),
+                          decoration: BoxDecoration(
+                              // border: Border.all(
+                              //     color: const Color(0xff0F00FF), width: 1),
+                              color: const Color(0xff0F00FF).withOpacity(0.05),
+                              borderRadius: BorderRadius.circular(6.r)),
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                                color: const Color(0xff0F00FF),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),

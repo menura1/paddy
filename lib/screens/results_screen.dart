@@ -323,7 +323,7 @@ class _ResultScreenState extends State<ResultScreen> {
         
         //yt results
         Container(
-          height: MediaQuery.of(context).size.height*0.85,
+          height: 635,
           padding : const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           margin : const EdgeInsets.symmetric( vertical: 20),
           decoration: BoxDecoration(
