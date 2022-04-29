@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:paddy/screens/splash_screen.dart';
 import 'package:paddy/services/disease_data.dart';
-// import 'package:paddy/services/yt_api_service.dart';
+import 'package:paddy/services/yt_api_service.dart';
 
 Future<void> main() async {
   DiseaseData().init();
-  // YtApiService().sendRequest("MKBHD");
+  YtApiService().sendRequest("MKBHD");
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
