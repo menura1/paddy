@@ -36,6 +36,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final ValidationService validationService = ValidationService();
 
   bool loading = false;
+  bool hideText = true;
+  bool hideText2 = true;
 
   @override
   Widget build(BuildContext context) {
@@ -132,12 +134,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(
                       height: 14.5.h,
                     ),
-                    // // dob text field
-                    // buildTextField(
-                    //     hint: 'Date of birth', controller: dateOfBirth),
-                    // SizedBox(
-                    //   height: 14.5.h,
-                    // ),
                     //password text field
                     buildTextField(hint: 'Password', controller: password),
                     SizedBox(
@@ -305,13 +301,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
       decoration: BoxDecoration(
           color: Colors.grey.withOpacity(0.20),
           borderRadius: BorderRadius.circular(6.r)),
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      padding: EdgeInsets.only(left: 20.w),
       margin: EdgeInsets.symmetric(horizontal: 0.w),
       child: TextField(
+        obscureText: hint == "Password"
+            ? hideText
+            : hint == "Re-type password"
+                ? hideText2
+                : false,
         controller: controller,
         decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 12.h),
             border: InputBorder.none,
+            suffixIcon: Visibility(
+              visible: hint == "Password" || hint == "Re-type password"
+                  ? true
+                  : false,
+              child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      if (hint == "Password") {
+                        hideText = !hideText;
+                      }
+                      else if (hint == "Re-type password") {
+                        hideText2 = !hideText2;
+                      }
+                    });
+                  },
+                  child: hint == "Password"
+                      ? Icon(
+                          hideText ? Icons.visibility_off : Icons.visibility)
+                      : Icon(hideText2
+                          ? Icons.visibility_off
+                          : Icons.visibility)),
+            ),
             hintText: hint,
             hintStyle: TextStyle(
                 fontSize: 14.sp,

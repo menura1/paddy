@@ -37,8 +37,8 @@ class _ResultScreenState extends State<ResultScreen> {
                           width: 360.w,
                           child: ClipRRect(
                               borderRadius: BorderRadius.only(
-                                  bottomRight: Radius.circular(30.r),
-                                  bottomLeft: Radius.circular(30.r)),
+                                  bottomRight: Radius.circular(15.r),
+                                  bottomLeft: Radius.circular(15.r)),
                               child: Image.file(
                                 widget.resultModel.imagePreview,
                                 fit: BoxFit.cover,

@@ -24,6 +24,7 @@ class _LogInScreenState extends State<LogInScreen> {
   ValidationService validationService = ValidationService();
 
   bool loading = false;
+  bool hideText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -310,13 +311,25 @@ class _LogInScreenState extends State<LogInScreen> {
       decoration: BoxDecoration(
           color: Colors.grey.withOpacity(0.20),
           borderRadius: BorderRadius.circular(6.r)),
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      padding: EdgeInsets.only(left: 20.w),
       margin: EdgeInsets.symmetric(horizontal: 0.w),
       child: TextField(
+        obscureText: hint == "Password" ? hideText : false,
         cursorColor: const Color(0xff0F00FF),
         controller: controller,
         decoration: InputDecoration(
             icon: icon,
+            suffixIcon: Visibility(
+              visible: hint == "Password" ? true : false,
+              child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      hideText = !hideText;
+                    });
+                  },
+                  child:
+                      Icon(hideText ? Icons.visibility_off : Icons.visibility)),
+            ),
             contentPadding: EdgeInsets.symmetric(vertical: 12.h),
             border: InputBorder.none,
             hintText: hint,

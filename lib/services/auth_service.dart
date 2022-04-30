@@ -7,7 +7,7 @@ class AuthService {
   Future<Map<String, dynamic>>login({required String email, required String password}) async {
     var response;
     await http.post(
-        Uri.parse("https://paddy-backend.herokuapp.com/authenticate"),
+        Uri.parse("https://my-app-rglqa.ondigitalocean.app/authenticate"),
         body: {
           "email": email,
           "password": password,
@@ -32,7 +32,7 @@ class AuthService {
       required String dateOfBirth}) async {
     var response;
     await http.post(
-        Uri.parse("https://paddy-backend.herokuapp.com/adduser"),
+        Uri.parse("https://my-app-rglqa.ondigitalocean.app/adduser"),
         body: {
           "email": email,
           "password": password,
@@ -44,7 +44,7 @@ class AuthService {
       response = jsonDecode(value.body);
 
       //setting the current user
-      if (response["success"]) {
+      if (response["suceess"]) {
         GlobalUser.currentUser = User(
             name: name,
             email: email,
@@ -53,7 +53,7 @@ class AuthService {
       }
     });
     return {
-      'success': response["success"],
+      'success': response["suceess"],
       'msg': response["msg"],
     };
   }
@@ -64,16 +64,16 @@ class AuthService {
 
     try{
       await http.get(
-          Uri.parse("https://paddy-backend.herokuapp.com/getinfo"),
+          Uri.parse("https://my-app-rglqa.ondigitalocean.app/getinfo"),
           headers: {
             'Authorization' : 'Bearer ${GlobalUser.authToken}'
           }
       ).then((value) {
         response = jsonDecode(value.body);
         GlobalUser.currentUser = User(
-            name: response['name']?? response['email'],
+            name: response['name'],
             email: response['email'],
-            phoneNum: response['phoneNumber']?? "0001110001",
+            phoneNum: response['phoneNumber'],
             dateOfBirth: '');
       });
     }
