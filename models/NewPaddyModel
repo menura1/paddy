@@ -50,6 +50,7 @@ train_augmentation = ImageDataGenerator(
     # Random Shearing 
     shear_range=0.2,
 )
+
 # Reading data from the directory
 train_data = train_augmentation.flow_from_directory(
     train_directory,
@@ -73,6 +74,7 @@ test_data = test_augmentation.flow_from_directory(
     batch_size=batch_size,
     class_mode="categorical"
 )
+
 # Loading the base model
 mbnet_v2 = keras.applications.MobileNetV2(
     weights="imagenet",
@@ -82,3 +84,72 @@ mbnet_v2 = keras.applications.MobileNetV2(
 
 # Stopping from being trainable
 mbnet_v2.trainable = False
+
+# Defining the layers
+inputs = keras.Input(shape=input_shape)
+
+# Getting the layer
+x = mbnet_v2(inputs, training = False)
+
+# Stacking layers further
+x = tf.keras.layers.GlobalAveragePooling2D()(x)
+x = tf.keras.layers.Dropout(0.2)(x)
+x = tf.keras.layers.Dense(len(categories), activation="softmax")(x)
+
+# Combining the model
+model = Model(inputs=inputs, outputs=x)
+
+# Summary
+model.summary()
+
+# Compiling
+model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
+
+# Defining callbacks to use
+early_stopping_cb = callbacks.EarlyStopping(monitor="loss", patience=3)
+
+# Number of epochs
+epochs = 5
+
+# Training the model
+history = model.fit(
+    train_data,
+    epochs=epochs,
+    steps_per_epoch=150,
+    callbacks=[early_stopping_cb]
+)
+
+#evaluating the model
+model.evaluate(test_data)
+
+# Plotting
+h1 = history.history
+
+# Ploting accuracy and loss
+plt.plot(h1["accuracy"], label="accuracy")
+plt.plot(h1["loss"], label="loss")
+
+if "val_accuracy" in h1 and "val_loss" in h1:
+    plt.plot(h1["val_accuracy"], label="val_accuracy")
+    plt.plot(h1["val_loss"], label="val_loss")
+
+# Adding the labels and legend
+plt.ylabel("Accuracy / Loss")
+plt.xlabel("Epochs #")
+plt.legend()
+
+# Finally showing the plot
+plt.show()
+
+#saving the model
+model.save("trained_model")
+
+import tensorflow as tf
+
+# Converting the model
+converter = tf.lite.TFLiteConverter.from_saved_model("/content/trained_model/") # path to the SavedModel directory
+tflite_model = converter.convert()
+
+# Saving the model.
+with open('model.tflite', 'wb') as f:
+  f.write(tflite_model)
