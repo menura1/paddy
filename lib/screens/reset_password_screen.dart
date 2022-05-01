@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paddy/services/auth_service.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({Key? key}) : super(key: key);
@@ -8,7 +9,7 @@ class ResetPasswordScreen extends StatefulWidget {
 }
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-  TextEditingController currentPassword = TextEditingController();
+  TextEditingController otp = TextEditingController();
   TextEditingController newPassword = TextEditingController();
   TextEditingController rePassword = TextEditingController();
 
@@ -16,64 +17,72 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          alignment: Alignment.center,
-          child: Stack(children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'Change password',
-                  style: TextStyle(
-                      fontSize: 22, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  'Enter your current password and your new password below to change the password.',
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                buildTextField(
-                    hint: 'Current Password', controller: currentPassword),
-                const SizedBox(
-                  height: 15,
-                ),
-                buildTextField(hint: 'New Password', controller: newPassword),
-                const SizedBox(
-                  height: 15,
-                ),
-                buildTextField(
-                    hint: 'Confirm Password', controller: rePassword),
-                const SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                  decoration: BoxDecoration(
-                      color: const Color(0xff0F00FF),
-                      borderRadius: BorderRadius.circular(25)),
-                  child: const Text(
-                    'Change Password',
-                    style: TextStyle(color: Colors.white),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            alignment: Alignment.center,
+            child: Stack(children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Change password',
+                    style: TextStyle(
+                        fontSize: 22, fontWeight: FontWeight.bold),
                   ),
-                )
-              ],
-            ),
-            Positioned(
-                top: 20, left: 0,
-                child: GestureDetector(
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    'Enter your current password and your new password below to change the password.',
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  buildTextField(
+                      hint: 'Current Password', controller: otp),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  buildTextField(hint: 'New Password', controller: newPassword),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  buildTextField(
+                      hint: 'Confirm Password', controller: rePassword),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  GestureDetector(
                     onTap: (){
-                      Navigator.of(context).pop();
+                      print('mmmmmmmmmm');
+                      AuthService().sendPasswordResetRequest();
                     },
-                    child: const Icon(Icons.arrow_back_rounded)))
-          ]),
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                      decoration: BoxDecoration(
+                          color: const Color(0xff0F00FF),
+                          borderRadius: BorderRadius.circular(25)),
+                      child: const Text(
+                        'Change Password',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              Positioned(
+                  top: 20, left: 0,
+                  child: GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).pop();
+                      },
+                      child: const Icon(Icons.arrow_back_rounded)))
+            ]),
+          ),
         ),
       ),
     );
@@ -105,7 +114,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   void dispose() {
     super.dispose();
-    currentPassword.dispose();
+    otp.dispose();
     newPassword.dispose();
     rePassword.dispose();
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../services/auth_service.dart';
+
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
 
@@ -53,16 +55,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                  decoration: BoxDecoration(
-                      color: const Color(0xff0F00FF),
-                      borderRadius: BorderRadius.circular(25)),
-                  child: const Text(
-                    'Change Password',
-                    style: TextStyle(color: Colors.white),
+                GestureDetector(
+                  onTap: (){
+                    AuthService().sendPasswordResetRequest();
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding:
+                    const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    decoration: BoxDecoration(
+                        color: const Color(0xff0F00FF),
+                        borderRadius: BorderRadius.circular(25)),
+                    child: const Text(
+                      'Change Password',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 )
               ],

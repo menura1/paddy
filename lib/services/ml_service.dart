@@ -11,6 +11,7 @@ class MLService{
 
   //running the model on the current image file
   Future<List?> runModel(File file) async{
+
     var runResult = await Tflite.runModelOnImage(
         path: file.path,
       numResults: 1,
@@ -18,6 +19,7 @@ class MLService{
       imageStd: 255,
       threshold: 0.5
     );
+
     print(runResult.toString());
 
     //returning the predictions of the model as a list
