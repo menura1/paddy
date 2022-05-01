@@ -7,7 +7,7 @@ class AuthService {
   Future<Map<String, dynamic>>login({required String email, required String password}) async {
     var response;
     await http.post(
-        Uri.parse("https://paddy-backend-jm544.ondigitalocean.app/authenticate"),
+        Uri.parse("https://paddy-backend-new-h43zk.ondigitalocean.app/authenticate"),
         body: {
           "email": email,
           "password": password,
@@ -32,7 +32,7 @@ class AuthService {
       required String dateOfBirth}) async {
     var response;
     await http.post(
-        Uri.parse("https://paddy-backend-jm544.ondigitalocean.app/adduser"),
+        Uri.parse("https://paddy-backend-new-h43zk.ondigitalocean.app/adduser"),
         body: {
           "email": email,
           "password": password,
@@ -53,7 +53,7 @@ class AuthService {
       }
     });
     return {
-      'success': response["suceess"],
+      'success': response["success"],
       'msg': response["msg"],
     };
   }
@@ -64,7 +64,7 @@ class AuthService {
 
     try{
       await http.get(
-          Uri.parse("https://paddy-backend-jm544.ondigitalocean.app/getinfo"),
+          Uri.parse("https://paddy-backend-new-h43zk.ondigitalocean.app/getinfo"),
           headers: {
             'Authorization' : 'Bearer ${GlobalUser.authToken}'
           }
@@ -83,13 +83,13 @@ class AuthService {
   }
 
 
-  sendPasswordResetRequest() async{
+  sendPasswordResetRequest(email) async{
 
     var response;
 
     try{
       await http.post(
-          Uri.parse("https://paddy-backend-jm544.ondigitalocean.app/reset-password"),
+          Uri.parse("https://paddy-backend-new-h43zk.ondigitalocean.app/reset-password"),
           body: {
             'email' : "menuradulsara@gmail.com"
           }
@@ -103,17 +103,17 @@ class AuthService {
     }
   }
 
-  updatePassword(String ) async{
+  updatePassword(String email, String otp, String password) async{
 
     var response;
 
     try{
       await http.put(
-          Uri.parse("https://paddy-backend-jm544.ondigitalocean.app/reset-password"),
+          Uri.parse("https://https://paddy-backend-new-h43zk.ondigitalocean.app/update-password"),
           body: {
-            'email' : "menuradulsara@gmail.com",
-            'otp' : '',
-            'newPassword' : ''
+            'email' : email,
+            'otp' : otp,
+            'newPassword' : password
           }
       ).then((value) {
         response = jsonDecode(value.body);
@@ -125,5 +125,26 @@ class AuthService {
     }
   }
 
+  updateInfo(String email, String name, String phoneNumber ) async{
+
+    var response;
+
+    try{
+      await http.put(
+          Uri.parse("https://paddy-backend-new-h43zk.ondigitalocean.app/update-info"),
+          body: {
+            'email' : email,
+            'name' : name,
+            'phoneNumber' : phoneNumber
+          }
+      ).then((value) {
+        response = jsonDecode(value.body);
+        print(response['message']);
+      });
+    }
+    catch(e){
+      print(e.toString());
+    }
+  }
 
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
+  // final  email;
   const ForgotPasswordScreen({Key? key}) : super(key: key);
 
   @override
@@ -57,7 +58,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
                 GestureDetector(
                   onTap: (){
-                    AuthService().sendPasswordResetRequest();
+                    AuthService().sendPasswordResetRequest("widget.email");
                   },
                   child: Container(
                     alignment: Alignment.center,

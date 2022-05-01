@@ -57,7 +57,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   GestureDetector(
                     onTap: (){
                       print('mmmmmmmmmm');
-                      AuthService().sendPasswordResetRequest();
+                      // AuthService().sendPasswordResetRequest();
                     },
                     child: Container(
                       alignment: Alignment.center,

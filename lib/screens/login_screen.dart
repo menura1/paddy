@@ -128,11 +128,17 @@ class _LogInScreenState extends State<LogInScreen> {
                       color: Colors.white,
                       child: InkWell(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ForgotPasswordScreen()));
+                            if(email.text.isNotEmpty){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ForgotPasswordScreen()));
+                            }
+                            else{
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text("Please fill the email field!")));
+                            }
                           },
                           child: const Text(
                             'Forgot password?',
