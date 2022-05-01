@@ -85,19 +85,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Sign up',
                       style: TextStyle(
-                          fontSize: 24.sp,
+                          fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: const Color(0xff0F00FF)),
+                          color: Color(0xff0F00FF)),
                     ),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Already have an account?',
-                          style: TextStyle(
-                              color: const Color(0xff737373), fontSize: 14.sp),
+                          style:
+                              TextStyle(color: Color(0xff737373), fontSize: 14),
                         ),
                         InkWell(
                           onTap: () {
@@ -106,11 +106,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 MaterialPageRoute(
                                     builder: (context) => const LogInScreen()));
                           },
-                          child: Text(
+                          child: const Text(
                             ' Log in',
                             style: TextStyle(
-                                color: const Color(0xff0F00FF),
-                                fontSize: 14.sp,
+                                color: Color(0xff0F00FF),
+                                fontSize: 14,
                                 fontWeight: FontWeight.w500),
                           ),
                         ),
@@ -145,15 +145,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    Text(
+                    const Text(
                       'By signing up to Paddy you agree to our',
-                      style: TextStyle(
-                          fontSize: 11.sp, color: const Color(0xff737373)),
+                      style: TextStyle(fontSize: 11, color: Color(0xff737373)),
                     ),
-                    Text(
+                    const Text(
                       'terms & conditions',
-                      style: TextStyle(
-                          color: const Color(0xff0F00FF), fontSize: 11.sp),
+                      style: TextStyle(color: Color(0xff0F00FF), fontSize: 11),
                     ),
                     SizedBox(
                       height: 10.h,
@@ -273,11 +271,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //     color: const Color(0xff0F00FF), width: 1),
                               color: const Color(0xff0F00FF).withOpacity(0.05),
                               borderRadius: BorderRadius.circular(6.r)),
-                          child: Text(
+                          child: const Text(
                             'Login',
                             style: TextStyle(
-                                color: const Color(0xff0F00FF),
-                                fontSize: 14.sp,
+                                color: Color(0xff0F00FF),
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -322,23 +320,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     setState(() {
                       if (hint == "Password") {
                         hideText = !hideText;
-                      }
-                      else if (hint == "Re-type password") {
+                      } else if (hint == "Re-type password") {
                         hideText2 = !hideText2;
                       }
                     });
                   },
                   child: hint == "Password"
-                      ? Icon(
-                          hideText ? Icons.visibility_off : Icons.visibility)
-                      : Icon(hideText2
-                          ? Icons.visibility_off
-                          : Icons.visibility)),
+                      ? Icon(hideText ? Icons.visibility_off : Icons.visibility)
+                      : Icon(
+                          hideText2 ? Icons.visibility_off : Icons.visibility)),
             ),
             hintText: hint,
-            hintStyle: TextStyle(
-                fontSize: 14.sp,
-                color: const Color(0xff737373),
+            hintStyle: const TextStyle(
+                fontSize: 14,
+                color: Color(0xff737373),
                 fontWeight: FontWeight.normal)),
       ),
     );

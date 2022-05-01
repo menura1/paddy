@@ -196,17 +196,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               ],
             ),
-            body: Center(
-                child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Align(
-                    alignment: Alignment.topRight,
-                    child: weatherWidget(context)),
-                buildHomeBody(),
-              ],
-            )),
+            body: SingleChildScrollView(
+              child: Center(
+                  child: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Align(
+                      alignment: Alignment.topRight,
+                      child: weatherWidget(context)),
+                  buildHomeBody(),
+                ],
+              )),
+            ),
           ),
         ),
       ),

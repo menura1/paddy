@@ -74,10 +74,10 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                     //logo section
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Text(
+                      const Text(
                         'PADDY',
                         style: TextStyle(
-                            fontSize: 55.00.sp, fontWeight: FontWeight.bold),
+                            fontSize: 55.00, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         height: 50.h,
@@ -91,21 +91,21 @@ class _LogInScreenState extends State<LogInScreen> {
                     SizedBox(
                       height: 70.h,
                     ),
-                    Text(
+                    const Text(
                       'Hi there!',
                       style: TextStyle(
-                        fontSize: 25.sp,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
-                        color: const Color(0xff0F00FF),
+                        color: Color(0xff0F00FF),
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Welcome back, please login to continue.',
                       style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 14,
                       ),
                     ),
-                    SizedBox(height: 20.sp),
+                    const SizedBox(height: 20),
                     //email text field
                     buildTextField(
                         hint: 'Email',
@@ -134,11 +134,11 @@ class _LogInScreenState extends State<LogInScreen> {
                                     builder: (context) =>
                                         const ForgotPasswordScreen()));
                           },
-                          child: Text(
+                          child: const Text(
                             'Forgot password?',
                             style: TextStyle(
-                                color: const Color(0xff0F00FF),
-                                fontSize: 14.sp),
+                                color: Color(0xff0F00FF),
+                                fontSize: 14),
                           )),
                     ),
                     SizedBox(
@@ -199,12 +199,12 @@ class _LogInScreenState extends State<LogInScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
+                              const Text(
                                 'Login',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
-                                    fontSize: 15.sp),
+                                    fontSize: 15),
                               ),
                               const SizedBox(
                                 width: 10,
@@ -256,11 +256,11 @@ class _LogInScreenState extends State<LogInScreen> {
                                     color: const Color(0xff0F00FF)
                                         .withOpacity(0.05),
                                     borderRadius: BorderRadius.circular(10.r)),
-                                child: Text(
+                                child: const Text(
                                   'Register',
                                   style: TextStyle(
-                                      color: const Color(0xff0F00FF),
-                                      fontSize: 14.sp,
+                                      color: Color(0xff0F00FF),
+                                      fontSize: 14,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -274,17 +274,17 @@ class _LogInScreenState extends State<LogInScreen> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          Text(
+                          const Text(
                             'By logging in to Paddy you agree to our',
                             style: TextStyle(
-                                fontSize: 11.sp,
-                                color: const Color(0xff737373)),
+                                fontSize: 11,
+                                color: Color(0xff737373)),
                           ),
-                          Text(
+                          const Text(
                             'terms & conditions',
                             style: TextStyle(
-                                color: const Color(0xff0F00FF),
-                                fontSize: 11.sp),
+                                color: Color(0xff0F00FF),
+                                fontSize: 11),
                           ),
                           SizedBox(
                             height: 5.h,

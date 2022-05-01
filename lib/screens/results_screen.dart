@@ -85,20 +85,20 @@ class _ResultScreenState extends State<ResultScreen> {
                               child: Text(
                                 '${widget.resultModel.confidence.toString().length > 3 ? widget.resultModel.confidence.toString().substring(0, 4) : widget.resultModel.confidence}%',
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 11.sp,
+                                style: const TextStyle(
+                                    fontSize: 11,
                                     fontWeight: FontWeight.w600),
                               ),
                             ),
                             SizedBox(
                               width: 5.w,
                             ),
-                            Text(
+                            const Text(
                               'Confidence',
                               style: TextStyle(
-                                fontSize: 13.sp,
+                                fontSize: 13,
                                 fontWeight: FontWeight.w600,
-                                color: const Color(0xff332FD0),
+                                color: Color(0xff332FD0),
                               ),
                             ),
                             const Spacer(),
@@ -114,8 +114,8 @@ class _ResultScreenState extends State<ResultScreen> {
                         //showing disease name
                         Text(
                           widget.resultModel.diseaseModel.name,
-                          style: TextStyle(
-                              fontSize: 18.sp, fontWeight: FontWeight.w700),
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w700),
                         ),
                         SizedBox(
                           height: 10.h,
@@ -146,7 +146,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                       color: detailsSelected
                                           ? Colors.white
                                           : const Color(0xff686868),
-                                      fontSize: 14.sp),
+                                      fontSize: 14),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -173,7 +173,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                       color: detailsSelected
                                           ? const Color(0xff686868)
                                           : Colors.white,
-                                      fontSize: 14.sp),
+                                      fontSize: 14),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -214,11 +214,11 @@ class _ResultScreenState extends State<ResultScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Disease details',
                 style: TextStyle(
-                    color: const Color(0xff332FD0),
-                    fontSize: 16.sp,
+                    color: Color(0xff332FD0),
+                    fontSize: 16,
                     fontWeight: FontWeight.w600),
               ),
               Container(
@@ -229,10 +229,10 @@ class _ResultScreenState extends State<ResultScreen> {
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                 child: Text(
                   widget.resultModel.diseaseModel.source,
-                  style: TextStyle(
-                      fontSize: 11.sp,
+                  style: const TextStyle(
+                      fontSize: 11,
                       fontWeight: FontWeight.normal,
-                      color: const Color(0xff084594)),
+                      color: Color(0xff084594)),
                 ),
               ),
             ],
@@ -242,7 +242,7 @@ class _ResultScreenState extends State<ResultScreen> {
           ),
           Text(
             widget.resultModel.diseaseModel.description,
-            style: TextStyle(fontSize: 14.sp, color: Colors.black87),
+            style: const TextStyle(fontSize: 14, color: Colors.black87),
             textAlign: TextAlign.justify,
           )
         ],
@@ -266,11 +266,11 @@ class _ResultScreenState extends State<ResultScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Remedies',
                     style: TextStyle(
-                        color: const Color(0xff332FD0),
-                        fontSize: 16.sp,
+                        color: Color(0xff332FD0),
+                        fontSize: 16,
                         fontWeight: FontWeight.w600),
                   ),
                   InkWell(
@@ -285,18 +285,18 @@ class _ResultScreenState extends State<ResultScreen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 2),
                       child: Row(
-                        children: [
+                        children: const [
                           Text(
                             "Find more remedies",
                             style: TextStyle(
-                                fontSize: 11.sp,
+                                fontSize: 11,
                                 fontWeight: FontWeight.normal,
-                                color: const Color(0xff084594)),
+                                color: Color(0xff084594)),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             width: 2,
                           ),
-                          const Icon(
+                          Icon(
                             Icons.search,
                             color: Color(0xff084594),
                             size: 12,
@@ -312,8 +312,8 @@ class _ResultScreenState extends State<ResultScreen> {
               ),
               Text(
                 remedy,
-                style: TextStyle(
-                  fontSize: 14.sp,
+                style: const TextStyle(
+                  fontSize: 14,
                 ),
                 textAlign: TextAlign.justify,
               ),
@@ -336,11 +336,11 @@ class _ResultScreenState extends State<ResultScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Results from YouTube',
                     style: TextStyle(
-                        color: const Color(0xff332FD0),
-                        fontSize: 16.sp,
+                        color: Color(0xff332FD0),
+                        fontSize: 16,
                         fontWeight: FontWeight.w600),
                   ),
                   InkWell(
