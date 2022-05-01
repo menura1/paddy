@@ -1,0 +1,84 @@
+# Importing the OS module
+import os
+
+# Importing python libraries
+import numpy as np
+import pandas as pd
+
+# Visualization
+import matplotlib.pyplot as plt
+
+# Tensorflow
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import callbacks, layers, Model
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+# Notebook magic
+%matplotlib inline
+
+#mounting
+from google.colab import drive
+drive.mount('/content/gdrive')
+
+#unzipping files from the google drive
+!unzip /content/gdrive/MyDrive/archive.zip
+
+# Setting up variables for Transfer learning
+image_size = 224
+target_size = (image_size, image_size)
+input_shape = (image_size, image_size, 3)
+grid_shape = (1, image_size, image_size, 3)
+
+batch_size = 32
+
+dataset_root = "/content/new plant diseases dataset(augmented)/New Plant Diseases Dataset(Augmented)"
+
+train_directory = os.path.join(dataset_root, "train")
+test_directory = os.path.join(dataset_root, "valid")
+#Defining train dataset augmentations 
+train_augmentation = ImageDataGenerator(
+    # Rescaling
+    rescale=1/255.0,
+    # Filling for W/H shift
+    fill_mode="nearest",
+    # Width and Height shift
+    width_shift_range=0.2,
+    height_shift_range=0.2,
+    # Random zooms
+    zoom_range=0.2,
+    # Random Shearing 
+    shear_range=0.2,
+)
+# Reading data from the directory
+train_data = train_augmentation.flow_from_directory(
+    train_directory,
+    target_size=(image_size, image_size),
+    batch_size=batch_size,
+    class_mode="categorical"
+)
+
+# Getting the list of categories in training data
+categories = list(train_data.class_indices.keys())
+# Testing data augmentations
+test_augmentation = ImageDataGenerator(
+    # Rescaling
+    rescale=1/255.0
+)
+
+# Read data from directory
+test_data = test_augmentation.flow_from_directory(
+    test_directory,
+    target_size=(image_size, image_size),
+    batch_size=batch_size,
+    class_mode="categorical"
+)
+# Loading the base model
+mbnet_v2 = keras.applications.MobileNetV2(
+    weights="imagenet",
+    include_top=False,
+    input_shape=input_shape
+)
+
+# Stopping from being trainable
+mbnet_v2.trainable = False
