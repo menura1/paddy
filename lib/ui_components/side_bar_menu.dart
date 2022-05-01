@@ -145,7 +145,7 @@ class SideBarMenu extends StatelessWidget {
                     GlobalUser.currentUser = User(
                         name: '', email: '', phoneNum: '', dateOfBirth: '');
                     Navigator.of(context).pop();
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const LogInScreen()));
