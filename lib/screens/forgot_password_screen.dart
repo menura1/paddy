@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paddy/global/global_user.dart';
 
 import '../services/auth_service.dart';
 
@@ -20,69 +21,94 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          alignment: Alignment.center,
-          child: Stack(children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'Reset password',
-                  style: TextStyle(
-                      fontSize: 22, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  'We have sent you an one time code to your email. Please enter it and your new password below to change the password.',
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                buildTextField(
-                    hint: 'One Time Code', controller: otp),
-                const SizedBox(
-                  height: 15,
-                ),
-                buildTextField(hint: 'New Password', controller: newPassword),
-                const SizedBox(
-                  height: 15,
-                ),
-                buildTextField(
-                    hint: 'Confirm Password', controller: rePassword),
-                const SizedBox(
-                  height: 30,
-                ),
-                GestureDetector(
-                  onTap: (){
-                    AuthService().sendPasswordResetRequest("widget.email");
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding:
-                    const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                    decoration: BoxDecoration(
-                        color: const Color(0xff0F00FF),
-                        borderRadius: BorderRadius.circular(25)),
-                    child: const Text(
-                      'Change Password',
-                      style: TextStyle(color: Colors.white),
-                    ),
+        body: GestureDetector(
+          onTap: (){
+            FocusScopeNode currentFocus = FocusScope.of(context);
+
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              alignment: Alignment.center,
+              child: Center(
+                child: Column(children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 100,),
+                      const Text(
+                        'Reset password',
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                        'We have sent you an one time code to your email. Please enter it and your new password below to change the password.',
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      buildTextField(
+                          hint: 'One Time Code', controller: otp),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      buildTextField(hint: 'New Password', controller: newPassword),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      buildTextField(
+                          hint: 'Confirm Password', controller: rePassword),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      GestureDetector(
+                        onTap: ()async{
+                          var response = await AuthService().updatePassword(GlobalUser.currentUser.email, otp.text, newPassword.text);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                               SnackBar(content: Row(
+                                 children: [
+                                   Text(response),
+                                   const Spacer(),
+                                   const SizedBox(
+                                       height: 10,
+                                       width: 10,
+                                       child: CircularProgressIndicator())
+                                 ],
+                               )));
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                          decoration: BoxDecoration(
+                              color: const Color(0xff0F00FF),
+                              borderRadius: BorderRadius.circular(25)),
+                          child: const Text(
+                            'Change Password',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                )
-              ],
+                  // Positioned(
+                  //     top: 20, left: 0,
+                  //     child: GestureDetector(
+                  //         onTap: (){
+                  //           Navigator.of(context).pop();
+                  //         },
+                  //         child: const Icon(Icons.arrow_back_rounded)))
+                ]),
+              ),
             ),
-            Positioned(
-                top: 20, left: 0,
-                child: GestureDetector(
-                    onTap: (){
-                      Navigator.of(context).pop();
-                    },
-                    child: const Icon(Icons.arrow_back_rounded)))
-          ]),
+          ),
         ),
       ),
     );

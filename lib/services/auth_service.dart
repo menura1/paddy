@@ -109,20 +109,21 @@ class AuthService {
 
     try{
       await http.put(
-          Uri.parse("https://https://paddy-backend-new-h43zk.ondigitalocean.app/update-password"),
+          Uri.parse("https://paddy-backend-new-h43zk.ondigitalocean.app/update-password"),
           body: {
             'email' : email,
-            'otp' : otp,
+            'OTP' : otp,
             'newPassword' : password
           }
       ).then((value) {
         response = jsonDecode(value.body);
-        print(response['message']);
+        print(response);
       });
     }
     catch(e){
       print(e.toString());
     }
+    return response['msg'];
   }
 
   updateInfo(String email, String name, String phoneNumber ) async{
@@ -139,12 +140,15 @@ class AuthService {
           }
       ).then((value) {
         response = jsonDecode(value.body);
-        print(response['message']);
+        print(response['msg']);
       });
     }
     catch(e){
       print(e.toString());
     }
+
+    return response['msg'];
   }
+
 
 }

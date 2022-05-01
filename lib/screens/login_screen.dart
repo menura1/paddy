@@ -129,6 +129,8 @@ class _LogInScreenState extends State<LogInScreen> {
                       child: InkWell(
                           onTap: () {
                             if(email.text.isNotEmpty){
+                              GlobalUser.currentUser.email = email.text;
+                              AuthService().sendPasswordResetRequest(GlobalUser.currentUser.email);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

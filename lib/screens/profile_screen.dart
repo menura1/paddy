@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paddy/global/global_user.dart';
 import 'package:paddy/screens/reset_password_screen.dart';
+import 'package:paddy/services/auth_service.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -63,7 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 90,
                   width: 90,
                   child: CircleAvatar(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Color(0xff0F00FF),
                     child: Icon(
                       Icons.person,
                       size: 55,
@@ -75,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 Text(
                   GlobalUser.currentUser.name == ''
-                      ? 'Ryan Reynolds'
+                      ? ''
                       : GlobalUser.currentUser.name,
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 22),
@@ -103,34 +104,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    InkWell(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(
-                            builder: (context)=> const ResetPasswordScreen()));
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.4),
-                            borderRadius: BorderRadiusDirectional.circular(8)),
-                        child: const Text(
-                          'Change password',
-                          style: TextStyle(color: Colors.black54),
+                    Visibility(
+                      visible: false,
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context)=> const ResetPasswordScreen()));
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.withOpacity(0.4),
+                              borderRadius: BorderRadiusDirectional.circular(8)),
+                          child: const Text(
+                            'Change password',
+                            style: TextStyle(color: Colors.black54),
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(
                       width: 20,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadiusDirectional.circular(8)),
-                      child: const Text(
-                        'Update info',
-                        style: TextStyle(color: Colors.white),
+                    InkWell(
+                      onTap: () async{
+                        var response = await AuthService().updateInfo(email.text, name.text, phoneNum.text);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Row(
+                              children: [
+                                Text(response),
+                                const Spacer(),
+                                const SizedBox(
+                                    height: 10,
+                                    width: 10,
+                                    child: CircularProgressIndicator())
+                              ],
+                            )));
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        decoration: BoxDecoration(
+                            color: const Color(0xff0F00FF),
+                            borderRadius: BorderRadiusDirectional.circular(8)),
+                        child: const Text(
+                          'Update info',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     )
                   ],
